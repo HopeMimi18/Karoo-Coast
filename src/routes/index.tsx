@@ -144,7 +144,7 @@ function Journey() {
   return (
     <main className="relative h-dvh w-full overflow-hidden bg-background text-foreground">
       {/* Map */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 isolate z-0">
         <ClientOnly fallback={<div className="h-full w-full bg-muted/30" />}>
           <Suspense fallback={<div className="h-full w-full bg-muted/30" />}>
             <JourneyMap
