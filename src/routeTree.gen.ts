@@ -15,7 +15,9 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as GuideRouteImport } from './routes/guide'
 import { Route as JourneyRouteImport } from './routes/journey'
 import { Route as PassportRouteImport } from './routes/passport'
+import { Route as PlanRouteImport } from './routes/plan'
 import { Route as QuizRouteImport } from './routes/quiz'
+import { Route as StoriesRouteImport } from './routes/stories'
 import { Route as ThreadsRouteImport } from './routes/threads'
 
 const IndexRoute = IndexRouteImport.update({
@@ -48,9 +50,19 @@ const PassportRoute = PassportRouteImport.update({
   path: '/passport',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PlanRoute = PlanRouteImport.update({
+  id: '/plan',
+  path: '/plan',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const QuizRoute = QuizRouteImport.update({
   id: '/quiz',
   path: '/quiz',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StoriesRoute = StoriesRouteImport.update({
+  id: '/stories',
+  path: '/stories',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ThreadsRoute = ThreadsRouteImport.update({
@@ -66,7 +78,9 @@ export interface FileRoutesByFullPath {
   '/guide': typeof GuideRoute
   '/journey': typeof JourneyRoute
   '/passport': typeof PassportRoute
+  '/plan': typeof PlanRoute
   '/quiz': typeof QuizRoute
+  '/stories': typeof StoriesRoute
   '/threads': typeof ThreadsRoute
 }
 export interface FileRoutesByTo {
@@ -76,7 +90,9 @@ export interface FileRoutesByTo {
   '/guide': typeof GuideRoute
   '/journey': typeof JourneyRoute
   '/passport': typeof PassportRoute
+  '/plan': typeof PlanRoute
   '/quiz': typeof QuizRoute
+  '/stories': typeof StoriesRoute
   '/threads': typeof ThreadsRoute
 }
 export interface FileRoutesById {
@@ -87,7 +103,9 @@ export interface FileRoutesById {
   '/guide': typeof GuideRoute
   '/journey': typeof JourneyRoute
   '/passport': typeof PassportRoute
+  '/plan': typeof PlanRoute
   '/quiz': typeof QuizRoute
+  '/stories': typeof StoriesRoute
   '/threads': typeof ThreadsRoute
 }
 export interface FileRouteTypes {
@@ -99,7 +117,9 @@ export interface FileRouteTypes {
     | '/guide'
     | '/journey'
     | '/passport'
+    | '/plan'
     | '/quiz'
+    | '/stories'
     | '/threads'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -109,7 +129,9 @@ export interface FileRouteTypes {
     | '/guide'
     | '/journey'
     | '/passport'
+    | '/plan'
     | '/quiz'
+    | '/stories'
     | '/threads'
   id:
     | '__root__'
@@ -119,7 +141,9 @@ export interface FileRouteTypes {
     | '/guide'
     | '/journey'
     | '/passport'
+    | '/plan'
     | '/quiz'
+    | '/stories'
     | '/threads'
   fileRoutesById: FileRoutesById
 }
@@ -130,7 +154,9 @@ export interface RootRouteChildren {
   GuideRoute: typeof GuideRoute
   JourneyRoute: typeof JourneyRoute
   PassportRoute: typeof PassportRoute
+  PlanRoute: typeof PlanRoute
   QuizRoute: typeof QuizRoute
+  StoriesRoute: typeof StoriesRoute
   ThreadsRoute: typeof ThreadsRoute
 }
 
@@ -178,11 +204,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PassportRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/plan': {
+      id: '/plan'
+      path: '/plan'
+      fullPath: '/plan'
+      preLoaderRoute: typeof PlanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/quiz': {
       id: '/quiz'
       path: '/quiz'
       fullPath: '/quiz'
       preLoaderRoute: typeof QuizRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/stories': {
+      id: '/stories'
+      path: '/stories'
+      fullPath: '/stories'
+      preLoaderRoute: typeof StoriesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/threads': {
@@ -202,7 +242,9 @@ const rootRouteChildren: RootRouteChildren = {
   GuideRoute: GuideRoute,
   JourneyRoute: JourneyRoute,
   PassportRoute: PassportRoute,
+  PlanRoute: PlanRoute,
   QuizRoute: QuizRoute,
+  StoriesRoute: StoriesRoute,
   ThreadsRoute: ThreadsRoute,
 }
 export const routeTree = rootRouteImport
