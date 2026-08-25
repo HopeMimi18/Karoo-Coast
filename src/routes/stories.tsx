@@ -15,7 +15,7 @@ export const Route = createFileRoute("/stories")({
         content:
           "Read and add traveller memories from stations along the Cape main line — in English, Afrikaans, isiXhosa, isiZulu or Sesotho.",
       },
-      { property: "og:title", content: "Community stories — Track 1067" },
+      { property: "og:title", content: "Community stories — Karoo & Coast" },
       { property: "og:description", content: "Traveller memories from every station on the Cape main line." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

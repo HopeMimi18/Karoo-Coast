@@ -7,13 +7,13 @@ import { useAuth } from "@/hooks/useAuth";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Sign in — Track 1067 rail passport" },
+      { title: "Sign in — Karoo & Coast rail passport" },
       {
         name: "description",
         content:
-          "Create a free Track 1067 account to collect station stamps, save trip plans, answer route quizzes and share your own stories from the Cape main line.",
+          "Create a free Karoo & Coast account to collect station stamps, save trip plans, answer route quizzes and share your own stories from the Cape main line.",
       },
-      { property: "og:title", content: "Sign in to Track 1067" },
+      { property: "og:title", content: "Sign in to Karoo & Coast" },
       { property: "og:description", content: "Collect stamps, save trips and share stories along the Cape main line." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

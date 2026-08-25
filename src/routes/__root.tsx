@@ -78,10 +78,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Track 1067 — the Cape main line, mapped and animated" },
+      { title: "Karoo & Coast — the Cape main line, mapped and animated" },
       { name: "description", content: "An interactive, multilingual journey along the Pretoria/Johannesburg to Cape Town railway." },
-      { name: "author", content: "Track 1067" },
-      { property: "og:title", content: "Track 1067" },
+      { name: "author", content: "Karoo & Coast" },
+      { property: "og:title", content: "Karoo & Coast" },
       { property: "og:description", content: "Ride the 1 546 km Cape main line in real time." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

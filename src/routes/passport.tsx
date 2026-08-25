@@ -12,9 +12,9 @@ export const Route = createFileRoute("/passport")({
       {
         name: "description",
         content:
-          "Your Track 1067 rail passport: collect stamps at all 28 stations and passing moments between Johannesburg and Cape Town, and unlock badges for each leg of the line.",
+          "Your Karoo & Coast rail passport: collect stamps at all 28 stations and passing moments between Johannesburg and Cape Town, and unlock badges for each leg of the line.",
       },
-      { property: "og:title", content: "Rail passport — Track 1067" },
+      { property: "og:title", content: "Rail passport — Karoo & Coast" },
       { property: "og:description", content: "Collect stamps and badges along the 1 546 km Cape main line." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

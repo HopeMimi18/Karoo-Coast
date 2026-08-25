@@ -10,13 +10,13 @@ import SiteHeader from "@/components/SiteHeader";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Track 1067 — interactive Pretoria to Cape Town rail journey" },
+      { title: "Karoo & Coast — interactive Pretoria to Cape Town rail journey" },
       {
         name: "description",
         content:
           "Your hub for the Cape main line: ride an animated map of the 1 546 km route, plan a trip, collect station stamps, test yourself on route trivia and share stories in five South African languages.",
       },
-      { property: "og:title", content: "Track 1067 — ride, plan, collect, share" },
+      { property: "og:title", content: "Karoo & Coast — ride, plan, collect, share" },
       {
         property: "og:description",
         content: "An interactive rail tourism platform for the Pretoria/Johannesburg to Cape Town line.",
@@ -124,7 +124,7 @@ function Home() {
           Ride the <span className="text-primary">1 546 km</span> between Pretoria and Cape Town — and make it yours.
         </h1>
         <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground">
-          Track 1067 turns South Africa's longest passenger line into something you can travel through: an animated
+          Karoo & Coast turns South Africa's longest passenger line into something you can travel through: an animated
           map on real rail geometry, the stories of every station, and a passport that fills up as you go.
         </p>
 
@@ -241,7 +241,7 @@ function Home() {
       </section>
 
       <footer className="border-t border-border px-5 py-8 text-center font-mono text-[11px] text-dust">
-        Track 1067 ·{" "}
+        Karoo & Coast ·{" "}
         <Link to="/about" className="text-primary underline-offset-4 hover:underline">
           how it was built
         </Link>{" "}

@@ -30,7 +30,7 @@ export const Route = createFileRoute("/journey")({
         content:
           "Ride the 1 546 km Cape main line in real time: real rail geometry, 28 stops and passing moments, five languages, and a passport stamp at every station you reach.",
       },
-      { property: "og:title", content: "Live ride — Track 1067" },
+      { property: "og:title", content: "Live ride — Karoo & Coast" },
       {
         property: "og:description",
         content: "Board the animated Cape main line and collect a stamp at every stop.",
