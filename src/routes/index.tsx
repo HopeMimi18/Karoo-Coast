@@ -163,7 +163,7 @@ function Journey() {
 
       {/* Night wash */}
       <div
-        className="pointer-events-none absolute inset-0 transition-opacity duration-1000"
+        className="pointer-events-none absolute inset-0 z-[900] transition-opacity duration-1000"
         style={{
           opacity: 1 - light,
           background:
@@ -172,7 +172,7 @@ function Journey() {
       />
 
       {/* Header */}
-      <header className="pointer-events-none absolute inset-x-0 top-0 z-20 flex flex-wrap items-start justify-between gap-3 p-4 sm:p-5">
+      <header className="pointer-events-none absolute inset-x-0 top-0 z-[1200] flex flex-wrap items-start justify-between gap-3 p-4 sm:p-5">
         <div className="pointer-events-auto rounded-sm border border-border bg-card/85 px-4 py-3 backdrop-blur-md">
           <h1 className="text-2xl leading-none">
             Track <span className="text-primary">1067</span>
@@ -222,7 +222,7 @@ function Journey() {
       </header>
 
       {/* Story rail */}
-      <section className="absolute inset-x-0 bottom-[8.5rem] top-auto z-20 max-h-[52dvh] overflow-y-auto px-4 sm:inset-y-0 sm:left-auto sm:right-0 sm:max-h-none sm:w-[27rem] sm:px-0">
+      <section className="absolute inset-x-0 bottom-[8.5rem] top-auto z-[1100] max-h-[52dvh] overflow-y-auto px-4 sm:inset-y-0 sm:left-auto sm:right-0 sm:max-h-none sm:w-[27rem] sm:px-0">
         <div className="h-full border border-border bg-card/92 p-5 backdrop-blur-md sm:border-y-0 sm:border-r-0 sm:overflow-y-auto sm:pt-28 sm:pb-44">
           <StoryPanel stop={active} lang={lang} speaking={speaking} onSpeak={speak} />
 
@@ -258,7 +258,7 @@ function Journey() {
       </section>
 
       {/* Controls */}
-      <footer className="absolute inset-x-0 bottom-0 z-30 border-t border-border bg-card/90 px-4 py-3 backdrop-blur-md sm:pr-[28rem]">
+      <footer className="absolute inset-x-0 bottom-0 z-[1300] border-t border-border bg-card/90 px-4 py-3 backdrop-blur-md sm:pr-[28rem]">
         <Timeline km={km} onScrub={(v) => { setKm(v); setManual(null); }} activeId={active.id} lang={lang} />
 
         <div className="mt-2 flex flex-wrap items-center gap-3">
