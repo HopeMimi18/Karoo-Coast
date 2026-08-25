@@ -191,6 +191,7 @@ function Journey() {
               {t(lang, "about")}
             </Link>
           </nav>
+          <div className="ndebele-strip mt-3 w-40 rounded-full" />
         </div>
 
         <div className="pointer-events-auto flex flex-col items-end gap-2">
