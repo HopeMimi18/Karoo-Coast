@@ -168,7 +168,36 @@ function Home() {
             </div>
           ))}
         </dl>
+        </div>
       </section>
+
+      {/* Biomes */}
+      <section className="mx-auto max-w-6xl px-5 pb-12">
+        <p className="mono-label text-dust">Five worlds in one ride</p>
+        <h2 className="mt-2 max-w-2xl text-3xl leading-tight sm:text-4xl">
+          From highveld thunder to fynbos and the sea
+        </h2>
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {BIOMES.map((b) => (
+            <figure key={b.title} className="overflow-hidden rounded-sm border border-border bg-card">
+              <img
+                src={b.img}
+                alt={b.alt}
+                loading="lazy"
+                width={1024}
+                height={768}
+                className="h-44 w-full object-cover"
+              />
+              <figcaption className="p-4">
+                <p className="font-mono text-[11px] text-dust">{b.km}</p>
+                <h3 className="mt-1 text-xl leading-none">{b.title}</h3>
+                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{b.body}</p>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+
 
       {/* Your journey */}
       <section className="mx-auto max-w-6xl px-5 pb-10">
