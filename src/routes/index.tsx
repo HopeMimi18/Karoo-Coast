@@ -6,6 +6,58 @@ import { TOTAL_KM, fmtKm } from "@/lib/journey";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import SiteHeader from "@/components/SiteHeader";
+import heroTrain from "@/assets/hero-train.jpg";
+import biomeHighveld from "@/assets/biome-highveld.jpg";
+import biomeGariep from "@/assets/biome-gariep.jpg";
+import biomeKaroo from "@/assets/biome-karoo.jpg";
+import biomeFynbos from "@/assets/biome-fynbos.jpg";
+import trainInterior from "@/assets/train-interior.jpg";
+
+const BIOMES = [
+  {
+    img: biomeHighveld,
+    alt: "Highveld grassland with railway tracks and summer thunderclouds",
+    km: "km 0 · Johannesburg / Pretoria",
+    title: "Highveld grassland",
+    body: "Gold-reef country: mine headgear on the horizon, thunderheads building over open veld as the train pulls south.",
+  },
+  {
+    img: biomeGariep,
+    alt: "Steel railway bridge over the green Orange River in arid Northern Cape",
+    km: "km 700 · !Gariep",
+    title: "The Orange River",
+    body: "The line crosses the country's biggest river into the Northern Cape — the water story that made irrigation towns possible.",
+  },
+  {
+    img: biomeKaroo,
+    alt: "Great Karoo scrubland at dusk with railway line and violet sky",
+    km: "km 900 · Great Karoo",
+    title: "Great Karoo",
+    body: "Hundreds of kilometres of silence, crossed mostly at night under one of the darkest skies on earth.",
+  },
+  {
+    img: biomeFynbos,
+    alt: "Cape fynbos with protea flowers, mountains and ocean beyond",
+    km: "km 1 450 · Cape fold belt",
+    title: "Fynbos & the fold mountains",
+    body: "Through the Hex River tunnels into the winelands, where protea veld runs down to the coast.",
+  },
+  {
+    img: trainInterior,
+    alt: "Wood-panelled corridor of a vintage South African passenger coach",
+    km: "26 hours on board",
+    title: "Life in the coach",
+    body: "Corridors, compartments and window seats — the slow travel that makes the country between the endpoints worth seeing.",
+  },
+  {
+    img: heroTrain,
+    alt: "Train on a mountain pass at sunset",
+    km: "km 1 546 · ||Hui !Gaeb",
+    title: "Cape Town arrival",
+    body: "Down the pass to Table Bay: the end of the Cape main line and the start of everything the peninsula offers.",
+  },
+] as const;
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
