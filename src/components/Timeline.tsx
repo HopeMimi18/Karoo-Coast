@@ -29,15 +29,17 @@ export default function Timeline({
           <div
             key={i}
             className="flex-1"
-            style={{ background: `color-mix(in oklab, var(--sand) ${Math.round(d * 62 + 8)}%, oklch(0.16 0.03 265))` }}
+            style={{
+              background: `color-mix(in oklab, var(--rail) ${Math.round(d * 70 + 6)}%, oklch(0.14 0.05 292))`,
+            }}
           />
         ))}
       </div>
 
       <div className="relative h-12 select-none">
-        <div className="absolute inset-x-0 top-5 h-px bg-border" />
+        <div className="beadwork absolute inset-x-0 top-[1.15rem] h-1.5 opacity-60" />
         <div
-          className="absolute top-5 left-0 h-px bg-primary"
+          className="absolute top-5 left-0 h-0.5 rounded-full bg-linear-to-r from-thread-water via-rail to-primary"
           style={{ width: `${pct}%` }}
         />
         {STOPS.map((s) => {
