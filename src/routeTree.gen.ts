@@ -11,7 +11,11 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as GuideRouteImport } from './routes/guide'
+import { Route as JourneyRouteImport } from './routes/journey'
+import { Route as PassportRouteImport } from './routes/passport'
+import { Route as QuizRouteImport } from './routes/quiz'
 import { Route as ThreadsRouteImport } from './routes/threads'
 
 const IndexRoute = IndexRouteImport.update({
@@ -24,9 +28,29 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GuideRoute = GuideRouteImport.update({
   id: '/guide',
   path: '/guide',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JourneyRoute = JourneyRouteImport.update({
+  id: '/journey',
+  path: '/journey',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PassportRoute = PassportRouteImport.update({
+  id: '/passport',
+  path: '/passport',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuizRoute = QuizRouteImport.update({
+  id: '/quiz',
+  path: '/quiz',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ThreadsRoute = ThreadsRouteImport.update({
@@ -38,34 +62,75 @@ const ThreadsRoute = ThreadsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
   '/guide': typeof GuideRoute
+  '/journey': typeof JourneyRoute
+  '/passport': typeof PassportRoute
+  '/quiz': typeof QuizRoute
   '/threads': typeof ThreadsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
   '/guide': typeof GuideRoute
+  '/journey': typeof JourneyRoute
+  '/passport': typeof PassportRoute
+  '/quiz': typeof QuizRoute
   '/threads': typeof ThreadsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
   '/guide': typeof GuideRoute
+  '/journey': typeof JourneyRoute
+  '/passport': typeof PassportRoute
+  '/quiz': typeof QuizRoute
   '/threads': typeof ThreadsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/guide' | '/threads'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/auth'
+    | '/guide'
+    | '/journey'
+    | '/passport'
+    | '/quiz'
+    | '/threads'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/guide' | '/threads'
-  id: '__root__' | '/' | '/about' | '/guide' | '/threads'
+  to:
+    | '/'
+    | '/about'
+    | '/auth'
+    | '/guide'
+    | '/journey'
+    | '/passport'
+    | '/quiz'
+    | '/threads'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/auth'
+    | '/guide'
+    | '/journey'
+    | '/passport'
+    | '/quiz'
+    | '/threads'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AuthRoute: typeof AuthRoute
   GuideRoute: typeof GuideRoute
+  JourneyRoute: typeof JourneyRoute
+  PassportRoute: typeof PassportRoute
+  QuizRoute: typeof QuizRoute
   ThreadsRoute: typeof ThreadsRoute
 }
 
@@ -85,11 +150,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/guide': {
       id: '/guide'
       path: '/guide'
       fullPath: '/guide'
       preLoaderRoute: typeof GuideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/journey': {
+      id: '/journey'
+      path: '/journey'
+      fullPath: '/journey'
+      preLoaderRoute: typeof JourneyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/passport': {
+      id: '/passport'
+      path: '/passport'
+      fullPath: '/passport'
+      preLoaderRoute: typeof PassportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quiz': {
+      id: '/quiz'
+      path: '/quiz'
+      fullPath: '/quiz'
+      preLoaderRoute: typeof QuizRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/threads': {
@@ -105,7 +198,11 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AuthRoute: AuthRoute,
   GuideRoute: GuideRoute,
+  JourneyRoute: JourneyRoute,
+  PassportRoute: PassportRoute,
+  QuizRoute: QuizRoute,
   ThreadsRoute: ThreadsRoute,
 }
 export const routeTree = rootRouteImport

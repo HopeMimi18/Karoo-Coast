@@ -1,339 +1,278 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { ClientOnly } from "@tanstack/react-router";
-import { STOPS, THREADS, type Stop, type Thread } from "@/data/stops";
-import { LANGS, t, type Lang } from "@/lib/i18n";
-import {
-  TOTAL_KM,
-  clockAtKm,
-  currentStop,
-  dayAtKm,
-  daylightAtKm,
-  elapsedLabel,
-  fmtKm,
-  nextStop,
-  passed,
-} from "@/lib/journey";
-import StoryPanel from "@/components/StoryPanel";
-import Timeline from "@/components/Timeline";
-
-const JourneyMap = lazy(() => import("@/components/JourneyMap"));
+import { useEffect, useState } from "react";
+import { STOPS, THREADS } from "@/data/stops";
+import { MAX_POINTS, QUESTIONS } from "@/data/quiz";
+import { TOTAL_KM, fmtKm } from "@/lib/journey";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
+import SiteHeader from "@/components/SiteHeader";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Track 1067 — Ride the Pretoria to Cape Town rail line" },
+      { title: "Track 1067 — interactive Pretoria to Cape Town rail journey" },
       {
         name: "description",
         content:
-          "An interactive, animated, multilingual map of the 1 546 km Cape main line: 28 stops and passing moments, real OpenStreetMap rail geometry, and the stories along the way.",
+          "Your hub for the Cape main line: ride an animated map of the 1 546 km route, plan a trip, collect station stamps, test yourself on route trivia and share stories in five South African languages.",
       },
-      { property: "og:title", content: "Track 1067 — Pretoria to Cape Town by rail" },
+      { property: "og:title", content: "Track 1067 — ride, plan, collect, share" },
       {
         property: "og:description",
-        content:
-          "Ride the Cape main line in real time. Diamonds, water, names and conflict across 1 546 km of South Africa.",
+        content: "An interactive rail tourism platform for the Pretoria/Johannesburg to Cape Town line.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: Journey,
+  component: Home,
 });
 
-const SPEEDS = [
-  { label: "1×", v: 1 },
-  { label: "250×", v: 250 },
-  { label: "900×", v: 900 },
-  { label: "3 000×", v: 3000 },
-];
+const CARDS = [
+  {
+    to: "/journey",
+    kicker: "01",
+    title: "Ride the line",
+    body: "An animated train on real rail geometry, with the story of every stop as you pass it. Speak it aloud in five languages.",
+  },
+  {
+    to: "/plan",
+    kicker: "02",
+    title: "Plan your trip",
+    body: "Pick the stops and interests that matter to you and build a saved itinerary with distances and arrival times.",
+  },
+  {
+    to: "/passport",
+    kicker: "03",
+    title: "Rail passport",
+    body: "Collect a stamp at every station you reach. Track your progress down the line and earn journey badges.",
+  },
+  {
+    to: "/quiz",
+    kicker: "04",
+    title: "Route challenge",
+    body: "Ten questions drawn from the line itself — gauge, diamonds, mountains and names. Points land on the leaderboard.",
+  },
+  {
+    to: "/stories",
+    kicker: "05",
+    title: "Community stories",
+    body: "Add your own memory of a station and read what other travellers left behind at the same platform.",
+  },
+  {
+    to: "/threads",
+    kicker: "06",
+    title: "Four threads",
+    body: "Diamonds, water, names and conflict — the storylines that run the whole length of the track.",
+  },
+] as const;
 
-function Journey() {
-  const [km, setKm] = useState(0);
-  const [playing, setPlaying] = useState(false);
-  const [speed, setSpeed] = useState(900);
-  const [lang, setLang] = useState<Lang>("en");
-  const [follow, setFollow] = useState(true);
-  const [filter, setFilter] = useState<Thread | "all">("all");
-  const [manual, setManual] = useState<Stop | null>(null);
-  const [speaking, setSpeaking] = useState(false);
-  const [started, setStarted] = useState(false);
+function Home() {
+  const { user, profile } = useAuth();
+  const [stamps, setStamps] = useState(0);
+  const [points, setPoints] = useState(0);
+  const [trips, setTrips] = useState(0);
+  const [board, setBoard] = useState<{ name: string; points: number }[]>([]);
 
-  // Journey clock: 1 546 km over 26 hours, scaled by speed.
-  const raf = useRef<number | null>(null);
-  const last = useRef<number>(0);
   useEffect(() => {
-    if (!playing) return;
-    last.current = performance.now();
-    const tick = (now: number) => {
-      const dt = (now - last.current) / 1000;
-      last.current = now;
-      setKm((prev) => {
-        const kmPerSec = (TOTAL_KM / (26 * 3600)) * speed;
-        const next = prev + kmPerSec * dt;
-        if (next >= TOTAL_KM) {
-          setPlaying(false);
-          return TOTAL_KM;
-        }
-        return next;
-      });
-      raf.current = requestAnimationFrame(tick);
-    };
-    raf.current = requestAnimationFrame(tick);
-    return () => {
-      if (raf.current) cancelAnimationFrame(raf.current);
-    };
-  }, [playing, speed]);
-
-  const auto = currentStop(km);
-  const active = manual ?? auto;
-  const upcoming = nextStop(km);
-  const light = daylightAtKm(km);
-  const night = light < 0.4;
-
-  // The interface follows the sun.
-  useEffect(() => {
-    if (typeof document === "undefined") return;
-    document.documentElement.classList.toggle("dark", night);
-  }, [night]);
-
-  // Clear the manual override once the train catches up with it.
-  useEffect(() => {
-    if (manual && Math.abs(manual.km - km) < 3) setManual(null);
-  }, [km, manual]);
-
-  const log = useMemo(() => {
-    const seen = passed(km);
-    return filter === "all" ? seen : seen.filter((s) => s.threads.includes(filter));
-  }, [km, filter]);
-
-  const speak = useCallback(() => {
-    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
-    const synth = window.speechSynthesis;
-    if (synth.speaking) {
-      synth.cancel();
-      setSpeaking(false);
+    if (!user) {
+      setStamps(0);
+      setPoints(0);
+      setTrips(0);
       return;
     }
-    const lead =
-      lang === "af" ? active.lead_af ?? active.lead : lang === "xh" ? active.lead_xh ?? active.lead : active.lead;
-    const u = new SpeechSynthesisUtterance(`${active.name}. ${lead} ${active.body}`);
-    const voice = window.speechSynthesis
-      .getVoices()
-      .find((v) => v.lang?.toLowerCase().startsWith(LANGS.find((l) => l.id === lang)!.speech.slice(0, 2)));
-    if (voice) u.voice = voice;
-    u.rate = 0.95;
-    u.onend = () => setSpeaking(false);
-    synth.speak(u);
-    setSpeaking(true);
-  }, [active, lang]);
+    void (async () => {
+      const [s, q, t] = await Promise.all([
+        supabase.from("stamps").select("id", { count: "exact", head: true }).eq("user_id", user.id),
+        supabase.from("quiz_results").select("points").eq("user_id", user.id),
+        supabase.from("trips").select("id", { count: "exact", head: true }).eq("user_id", user.id),
+      ]);
+      setStamps(s.count ?? 0);
+      setPoints((q.data ?? []).reduce((sum, r) => sum + (r.points as number), 0));
+      setTrips(t.count ?? 0);
+    })();
+  }, [user]);
 
   useEffect(() => {
-    return () => {
-      if (typeof window !== "undefined" && "speechSynthesis" in window) window.speechSynthesis.cancel();
-    };
-  }, []);
-
-  const depart = () => {
-    setStarted(true);
-    setPlaying(true);
-  };
+    void (async () => {
+      const { data } = await supabase.from("quiz_results").select("user_id, points");
+      const { data: people } = await supabase.from("profiles").select("id, display_name");
+      const names = new Map((people ?? []).map((p) => [p.id as string, p.display_name as string]));
+      const totals = new Map<string, number>();
+      for (const row of data ?? []) {
+        const id = row.user_id as string;
+        totals.set(id, (totals.get(id) ?? 0) + (row.points as number));
+      }
+      setBoard(
+        [...totals.entries()]
+          .map(([id, p]) => ({ name: names.get(id) ?? "Traveller", points: p }))
+          .sort((a, b) => b.points - a.points)
+          .slice(0, 5),
+      );
+    })();
+  }, [user]);
 
   const stopCount = STOPS.filter((s) => s.kind === "stop").length;
 
   return (
-    <main className="relative h-dvh w-full overflow-hidden bg-background text-foreground">
-      {/* Map */}
-      <div className="absolute inset-0 isolate z-0">
-        <ClientOnly fallback={<div className="h-full w-full bg-muted/30" />}>
-          <Suspense fallback={<div className="h-full w-full bg-muted/30" />}>
-            <JourneyMap
-              km={km}
-              follow={follow}
-              night={night}
-              activeId={active.id}
-              onSelect={(s) => {
-                setManual(s);
-                setKm(s.km);
-              }}
-            />
-          </Suspense>
-        </ClientOnly>
-      </div>
+    <div className="min-h-dvh bg-background text-foreground">
+      <SiteHeader />
 
-      {/* Night wash */}
-      <div
-        className="pointer-events-none absolute inset-0 z-[900] transition-opacity duration-1000"
-        style={{
-          opacity: 1 - light,
-          background:
-            "radial-gradient(120% 80% at 50% 0%, oklch(0.2 0.05 265 / 0.25), oklch(0.09 0.03 265 / 0.72))",
-        }}
-      />
+      <section className="mx-auto max-w-6xl px-5 pt-12 pb-10">
+        <p className="mono-label text-dust">Geekulcha Train Tourism · Cape main line</p>
+        <h1 className="mt-3 max-w-3xl text-5xl leading-[0.95] sm:text-7xl">
+          Ride the <span className="text-primary">1 546 km</span> between Pretoria and Cape Town — and make it yours.
+        </h1>
+        <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground">
+          Track 1067 turns South Africa's longest passenger line into something you can travel through: an animated
+          map on real rail geometry, the stories of every station, and a passport that fills up as you go.
+        </p>
 
-      {/* Header */}
-      <header className="pointer-events-none absolute inset-x-0 top-0 z-[1200] flex flex-wrap items-start justify-between gap-3 p-4 sm:p-5">
-        <div className="pointer-events-auto rounded-sm border border-border bg-card/85 px-4 py-3 backdrop-blur-md">
-          <h1 className="text-2xl leading-none">
-            Track <span className="text-primary">1067</span>
-          </h1>
-          <p className="mt-1 max-w-[22rem] text-[11px] leading-tight text-muted-foreground">
-            {t(lang, "subtitle")}
-          </p>
-          <nav className="mt-2 flex gap-3 text-[11px]">
-            <Link to="/guide" className="text-primary underline-offset-4 hover:underline">
-              {t(lang, "guide")}
-            </Link>
-            <Link to="/threads" className="text-primary underline-offset-4 hover:underline">
-              {t(lang, "threads")}
-            </Link>
-            <Link to="/about" className="text-primary underline-offset-4 hover:underline">
-              {t(lang, "about")}
-            </Link>
-          </nav>
-          <div className="ndebele-strip mt-3 w-40 rounded-full" />
-        </div>
-
-        <div className="pointer-events-auto flex flex-col items-end gap-2">
-          <div className="flex items-center gap-2 rounded-sm border border-border bg-card/85 px-3 py-2 font-mono text-xs backdrop-blur-md">
-            <span className="text-sand">{clockAtKm(km)}</span>
-            <span className="text-dust">day {dayAtKm(km)}</span>
-            <span className="h-3 w-px bg-border" />
-            <span className={night ? "text-thread-water" : "text-primary"}>
-              {night ? t(lang, "night") : t(lang, "day")}
-            </span>
-          </div>
-          <select
-            value={lang}
-            onChange={(e) => setLang(e.target.value as Lang)}
-            aria-label={t(lang, "language")}
-            className="rounded-sm border border-border bg-card/85 px-2 py-1.5 text-xs backdrop-blur-md"
+        <div className="mt-7 flex flex-wrap gap-3">
+          <Link
+            to="/journey"
+            className="rounded-sm bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90"
           >
-            {LANGS.map((l) => (
-              <option key={l.id} value={l.id}>
-                {l.native}
-              </option>
-            ))}
-          </select>
-          <label className="flex items-center gap-2 rounded-sm border border-border bg-card/85 px-2 py-1.5 text-[11px] backdrop-blur-md">
-            <input type="checkbox" checked={follow} onChange={(e) => setFollow(e.target.checked)} />
-            follow the train
-          </label>
+            Board the train
+          </Link>
+          {!user && (
+            <Link to="/auth" className="rounded-sm border border-border px-5 py-2.5 text-sm hover:border-primary">
+              Get your passport
+            </Link>
+          )}
+          <Link to="/plan" className="rounded-sm border border-border px-5 py-2.5 text-sm hover:border-primary">
+            Plan a trip
+          </Link>
         </div>
-      </header>
 
-      {/* Story rail */}
-      <section className="absolute inset-x-0 bottom-[8.5rem] top-auto z-[1100] max-h-[52dvh] overflow-y-auto px-4 sm:inset-y-0 sm:left-auto sm:right-0 sm:max-h-none sm:w-[27rem] sm:px-0">
-        <div className="h-full border border-border bg-card/92 p-5 backdrop-blur-md sm:border-y-0 sm:border-r-0 sm:overflow-y-auto sm:pt-28 sm:pb-44">
-          <StoryPanel stop={active} lang={lang} speaking={speaking} onSpeak={speak} />
+        <dl className="mt-10 grid grid-cols-2 gap-4 border-t border-border pt-6 font-mono text-xs sm:grid-cols-4">
+          {[
+            [fmtKm(TOTAL_KM), "of track"],
+            [`${stopCount}`, "stations"],
+            [`${STOPS.length - stopCount}`, "passing moments"],
+            ["5", "languages"],
+          ].map(([v, k]) => (
+            <div key={k}>
+              <dt className="text-2xl text-sand">{v}</dt>
+              <dd className="text-dust">{k}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
 
-          {upcoming && (
-            <p className="mt-6 hairline pt-4 font-mono text-[11px] text-muted-foreground">
-              {t(lang, "nextUp")}: <span className="text-sand">{upcoming.name}</span> ·{" "}
-              {fmtKm(Math.max(0, upcoming.km - km))} · {clockAtKm(upcoming.km)}
+      {/* Your journey */}
+      <section className="mx-auto max-w-6xl px-5 pb-10">
+        <div className="rounded-sm border border-border bg-card p-5">
+          <p className="mono-label text-dust">
+            {user ? `Kicking off, ${profile?.display_name ?? "traveller"}` : "Your journey"}
+          </p>
+          {user ? (
+            <div className="mt-4 grid gap-4 sm:grid-cols-3">
+              <Progress label="Stamps collected" value={stamps} total={STOPS.length} to="/passport" />
+              <Progress label="Quiz points" value={points} total={MAX_POINTS} to="/quiz" />
+              <Progress label="Saved trips" value={trips} total={Math.max(trips, 3)} to="/plan" />
+            </div>
+          ) : (
+            <p className="mt-3 max-w-lg text-sm text-muted-foreground">
+              Sign in to collect station stamps, save trip plans, score {MAX_POINTS} quiz points across{" "}
+              {QUESTIONS.length} questions and post your own station stories.{" "}
+              <Link to="/auth" className="text-primary underline-offset-4 hover:underline">
+                Create a free passport →
+              </Link>
             </p>
           )}
-
-          <div className="mt-6 hidden sm:block">
-            <p className="mono-label mb-2 text-dust">{t(lang, "journeyLog")}</p>
-            <ul className="space-y-1">
-              {log.map((s) => (
-                <li key={s.id}>
-                  <button
-                    onClick={() => {
-                      setManual(s);
-                      setKm(s.km);
-                    }}
-                    className={`flex w-full items-baseline justify-between gap-2 py-0.5 text-left text-xs hover:text-primary ${
-                      s.id === active.id ? "text-primary" : "text-muted-foreground"
-                    }`}
-                  >
-                    <span className="truncate">{s.name}</span>
-                    <span className="font-mono text-[10px] text-dust">{Math.round(s.km)}</span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
       </section>
 
-      {/* Controls */}
-      <footer className="absolute inset-x-0 bottom-0 z-[1300] border-t border-border bg-card/90 px-4 py-3 backdrop-blur-md sm:pr-[28rem]">
-        <Timeline km={km} onScrub={(v) => { setKm(v); setManual(null); }} activeId={active.id} lang={lang} />
-
-        <div className="mt-2 flex flex-wrap items-center gap-3">
-          <button
-            onClick={() => (playing ? setPlaying(false) : depart())}
-            className="rounded-sm bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+      {/* Cards */}
+      <section className="mx-auto grid max-w-6xl gap-4 px-5 pb-12 sm:grid-cols-2 lg:grid-cols-3">
+        {CARDS.map((c) => (
+          <Link
+            key={c.to}
+            to={c.to}
+            className="group rounded-sm border border-border bg-card p-5 transition-colors hover:border-primary"
           >
-            {playing ? t(lang, "pause") : started ? t(lang, "ride") : t(lang, "play")}
-          </button>
-          <button
-            onClick={() => {
-              setKm(0);
-              setManual(null);
-              setPlaying(false);
-            }}
-            className="rounded-sm border border-border px-3 py-2 text-xs text-muted-foreground hover:text-foreground"
-          >
-            {t(lang, "restart")}
-          </button>
+            <span className="font-mono text-[11px] text-dust">{c.kicker}</span>
+            <h2 className="mt-2 text-2xl leading-none group-hover:text-primary">{c.title}</h2>
+            <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{c.body}</p>
+          </Link>
+        ))}
+      </section>
 
-          <div className="flex items-center gap-1">
-            {SPEEDS.map((s) => (
-              <button
-                key={s.v}
-                onClick={() => setSpeed(s.v)}
-                className={`rounded-sm border px-2 py-1 font-mono text-[11px] ${
-                  speed === s.v
-                    ? "border-primary text-primary"
-                    : "border-border text-muted-foreground hover:text-foreground"
-                }`}
+      {/* Threads + leaderboard */}
+      <section className="mx-auto grid max-w-6xl gap-4 px-5 pb-16 lg:grid-cols-[2fr_1fr]">
+        <div className="rounded-sm border border-border bg-card p-5">
+          <p className="mono-label text-dust">Storylines along the track</p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {THREADS.map((th) => (
+              <span
+                key={th.id}
+                className="rounded-full border px-3 py-1 text-[11px]"
+                style={{ borderColor: th.color, color: th.color }}
               >
-                {s.label}
-              </button>
+                {th.label}
+              </span>
             ))}
           </div>
-
-          <div className="ml-auto flex items-center gap-3 font-mono text-[11px] text-muted-foreground">
-            <span>
-              {t(lang, "distance")} <span className="text-sand">{fmtKm(km)}</span> / {fmtKm(TOTAL_KM)}
-            </span>
-            <span className="hidden sm:inline">
-              {t(lang, "elapsed")} <span className="text-sand">{elapsedLabel(km)}</span>
-            </span>
-            <span className="hidden lg:inline">
-              {stopCount} {t(lang, "stops")} · {STOPS.length - stopCount} passing
-            </span>
-          </div>
+          <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
+            Every stop is tagged with the threads it belongs to, so you can travel the line by the story you care
+            about — the diamond rush, the fight for water, the older names beneath the map, or the conflicts the rails
+            carried.
+          </p>
         </div>
 
-        <div className="mt-2 flex flex-wrap items-center gap-1.5">
-          <button
-            onClick={() => setFilter("all")}
-            className={`rounded-full border px-2.5 py-1 text-[11px] ${
-              filter === "all" ? "border-primary text-primary" : "border-border text-muted-foreground"
-            }`}
-          >
-            {t(lang, "allThreads")}
-          </button>
-          {THREADS.map((th) => (
-            <button
-              key={th.id}
-              onClick={() => setFilter(filter === th.id ? "all" : th.id)}
-              className="rounded-full border px-2.5 py-1 text-[11px] transition-opacity"
-              style={{
-                borderColor: th.color,
-                color: th.color,
-                opacity: filter === "all" || filter === th.id ? 1 : 0.4,
-              }}
-            >
-              {th.label}
-            </button>
-          ))}
+        <div className="rounded-sm border border-border bg-card p-5">
+          <p className="mono-label text-dust">Leaderboard</p>
+          {board.length === 0 ? (
+            <p className="mt-3 text-xs text-muted-foreground">No scores yet — be the first down the line.</p>
+          ) : (
+            <ol className="mt-3 space-y-1.5 font-mono text-xs">
+              {board.map((row, i) => (
+                <li key={`${row.name}-${i}`} className="flex justify-between">
+                  <span className="text-muted-foreground">
+                    {i + 1}. {row.name}
+                  </span>
+                  <span className="text-sand">{row.points}</span>
+                </li>
+              ))}
+            </ol>
+          )}
         </div>
+      </section>
+
+      <footer className="border-t border-border px-5 py-8 text-center font-mono text-[11px] text-dust">
+        Track 1067 ·{" "}
+        <Link to="/about" className="text-primary underline-offset-4 hover:underline">
+          how it was built
+        </Link>{" "}
+        · built for the Geekulcha Train Tourism Hackathon
       </footer>
-    </main>
+    </div>
+  );
+}
+
+function Progress({
+  label,
+  value,
+  total,
+  to,
+}: {
+  label: string;
+  value: number;
+  total: number;
+  to: "/passport" | "/quiz" | "/plan";
+}) {
+  const pct = total ? Math.min(100, Math.round((value / total) * 100)) : 0;
+  return (
+    <Link to={to} className="block rounded-sm border border-border p-4 hover:border-primary">
+      <p className="font-mono text-[11px] text-dust">{label}</p>
+      <p className="mt-1 text-3xl text-sand">
+        {value}
+        <span className="text-base text-dust"> / {total}</span>
+      </p>
+      <div className="mt-3 h-1 w-full rounded-full bg-muted">
+        <div className="h-1 rounded-full bg-primary" style={{ width: `${pct}%` }} />
+      </div>
+    </Link>
   );
 }
