@@ -10,13 +10,13 @@ export function positionAtKm(km: number): LatLon {
   let hi = ROUTE_KM.length - 1;
   while (lo < hi - 1) {
     const mid = (lo + hi) >> 1;
-    if (ROUTE_KM[mid] <= target) lo = mid;
+    if (ROUTE_KM[mid]! <= target) lo = mid;
     else hi = mid;
   }
-  const a = ROUTE[lo];
-  const b = ROUTE[hi];
-  const span = ROUTE_KM[hi] - ROUTE_KM[lo] || 1;
-  const t = (target - ROUTE_KM[lo]) / span;
+  const a = ROUTE[lo]!;
+  const b = ROUTE[hi]!;
+  const span = ROUTE_KM[hi]! - ROUTE_KM[lo]! || 1;
+  const t = (target - ROUTE_KM[lo]!) / span;
   return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
 }
 
@@ -33,7 +33,7 @@ export function bearingAtKm(km: number): number {
 
 /** The moment the passenger is currently at or has just passed. */
 export function currentStop(km: number): Stop {
-  let found = STOPS[0];
+  let found = STOPS[0]!;
   for (const s of STOPS) if (s.km <= km + 6) found = s;
   return found;
 }

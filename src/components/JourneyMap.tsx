@@ -42,7 +42,7 @@ export default function JourneyMap({ km, follow, night, activeId, onSelect }: Pr
       }).addTo(m);
 
       L.polyline(ROUTE, { color: "#8a8078", weight: 2.5, opacity: 0.55 }).addTo(m);
-      travelled.current = L.polyline([ROUTE[0]], {
+      travelled.current = L.polyline([ROUTE[0]!], {
         color: "#e0813f",
         weight: 4,
         opacity: 0.95,
@@ -87,7 +87,7 @@ export default function JourneyMap({ km, follow, night, activeId, onSelect }: Pr
     if (travelled.current) {
       const done: [number, number][] = [];
       for (let i = 0; i < ROUTE.length; i++) {
-        if (ROUTE_KM[i] <= km) done.push(ROUTE[i]);
+        if (ROUTE_KM[i]! <= km) done.push(ROUTE[i]!);
         else break;
       }
       travelled.current.setLatLngs([...done, pos]);
