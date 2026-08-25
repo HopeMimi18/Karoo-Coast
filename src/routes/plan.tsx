@@ -21,7 +21,7 @@ export const Route = createFileRoute("/plan")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: Plan;
+  component: Plan,
 });
 
 type Trip = { id: string; title: string; stop_ids: string[]; interests: string[]; notes: string | null };
