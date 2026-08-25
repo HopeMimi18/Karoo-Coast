@@ -74,81 +74,86 @@
 
 :root {
   --radius: 0.25rem;
-  /* Karoo dusk: warm dark ground, ember accent, sand type. */
-  --background: oklch(0.17 0.018 55);
-  --foreground: oklch(0.94 0.012 80);
-  --card: oklch(0.215 0.021 55);
-  --card-foreground: oklch(0.94 0.012 80);
-  --popover: oklch(0.2 0.02 55);
-  --popover-foreground: oklch(0.94 0.012 80);
-  --primary: oklch(0.68 0.16 48);
-  --primary-foreground: oklch(0.16 0.02 55);
-  --secondary: oklch(0.27 0.022 55);
-  --secondary-foreground: oklch(0.94 0.012 80);
-  --muted: oklch(0.26 0.018 55);
-  --muted-foreground: oklch(0.69 0.02 70);
-  --accent: oklch(0.3 0.03 55);
-  --accent-foreground: oklch(0.95 0.012 80);
-  --destructive: oklch(0.58 0.19 25);
-  --destructive-foreground: oklch(0.97 0.01 80);
-  --border: oklch(0.98 0.01 80 / 12%);
-  --input: oklch(0.98 0.01 80 / 16%);
-  --ring: oklch(0.68 0.16 48);
-  --rail: oklch(0.78 0.11 68);
-  --ember: oklch(0.72 0.18 45);
-  --sand: oklch(0.88 0.045 82);
-  --dust: oklch(0.55 0.03 62);
-  --thread-diamond: oklch(0.85 0.11 195);
-  --thread-name: oklch(0.8 0.14 95);
-  --thread-water: oklch(0.72 0.12 235);
-  --thread-conflict: oklch(0.66 0.16 25);
-  --chart-1: oklch(0.72 0.18 45);
-  --chart-2: oklch(0.8 0.14 95);
-  --chart-3: oklch(0.72 0.12 235);
-  --chart-4: oklch(0.85 0.11 195);
-  --chart-5: oklch(0.66 0.16 25);
-  --sidebar: oklch(0.2 0.02 55);
-  --sidebar-foreground: oklch(0.94 0.012 80);
-  --sidebar-primary: oklch(0.68 0.16 48);
-  --sidebar-primary-foreground: oklch(0.16 0.02 55);
-  --sidebar-accent: oklch(0.27 0.022 55);
-  --sidebar-accent-foreground: oklch(0.94 0.012 80);
-  --sidebar-border: oklch(0.98 0.01 80 / 12%);
-  --sidebar-ring: oklch(0.68 0.16 48);
+  /* Fynbos Ink — day leg: deep pine-teal ground, protea magenta, aloe green. */
+  --background: oklch(0.165 0.028 195);
+  --foreground: oklch(0.95 0.015 180);
+  --card: oklch(0.205 0.032 195);
+  --card-foreground: oklch(0.95 0.015 180);
+  --popover: oklch(0.195 0.032 195);
+  --popover-foreground: oklch(0.95 0.015 180);
+  --primary: oklch(0.7 0.175 348);
+  --primary-foreground: oklch(0.15 0.03 195);
+  --secondary: oklch(0.26 0.035 195);
+  --secondary-foreground: oklch(0.95 0.015 180);
+  --muted: oklch(0.245 0.03 195);
+  --muted-foreground: oklch(0.72 0.03 185);
+  --accent: oklch(0.29 0.045 195);
+  --accent-foreground: oklch(0.96 0.015 180);
+  --destructive: oklch(0.6 0.19 20);
+  --destructive-foreground: oklch(0.97 0.01 180);
+  --border: oklch(0.95 0.02 180 / 13%);
+  --input: oklch(0.95 0.02 180 / 17%);
+  --ring: oklch(0.7 0.175 348);
+  --rail: oklch(0.82 0.16 148);
+  --ember: oklch(0.75 0.16 340);
+  --sand: oklch(0.91 0.045 168);
+  --dust: oklch(0.58 0.035 190);
+  --thread-diamond: oklch(0.88 0.09 205);
+  --thread-name: oklch(0.83 0.16 128);
+  --thread-water: oklch(0.78 0.13 215);
+  --thread-conflict: oklch(0.7 0.19 352);
+  --chart-1: oklch(0.7 0.175 348);
+  --chart-2: oklch(0.83 0.16 128);
+  --chart-3: oklch(0.78 0.13 215);
+  --chart-4: oklch(0.88 0.09 205);
+  --chart-5: oklch(0.8 0.15 85);
+  --sidebar: oklch(0.195 0.032 195);
+  --sidebar-foreground: oklch(0.95 0.015 180);
+  --sidebar-primary: oklch(0.7 0.175 348);
+  --sidebar-primary-foreground: oklch(0.15 0.03 195);
+  --sidebar-accent: oklch(0.26 0.035 195);
+  --sidebar-accent-foreground: oklch(0.95 0.015 180);
+  --sidebar-border: oklch(0.95 0.02 180 / 13%);
+  --sidebar-ring: oklch(0.7 0.175 348);
 }
 
 .dark {
-  --background: oklch(0.115 0.022 265);
-  --foreground: oklch(0.93 0.015 250);
-  --card: oklch(0.155 0.026 265);
-  --card-foreground: oklch(0.93 0.015 250);
-  --popover: oklch(0.15 0.026 265);
-  --popover-foreground: oklch(0.93 0.015 250);
-  --primary: oklch(0.74 0.12 75);
-  --primary-foreground: oklch(0.13 0.02 265);
-  --secondary: oklch(0.22 0.03 265);
-  --secondary-foreground: oklch(0.93 0.015 250);
-  --muted: oklch(0.21 0.028 265);
-  --muted-foreground: oklch(0.68 0.03 255);
-  --accent: oklch(0.25 0.035 265);
-  --accent-foreground: oklch(0.95 0.012 250);
-  --destructive: oklch(0.6 0.17 25);
-  --destructive-foreground: oklch(0.97 0.01 250);
-  --border: oklch(0.9 0.02 250 / 12%);
-  --input: oklch(0.9 0.02 250 / 16%);
-  --ring: oklch(0.74 0.12 75);
-  --rail: oklch(0.8 0.08 250);
-  --ember: oklch(0.74 0.12 75);
-  --sand: oklch(0.88 0.03 250);
-  --dust: oklch(0.5 0.03 260);
-  --sidebar: oklch(0.15 0.026 265);
-  --sidebar-foreground: oklch(0.93 0.015 250);
-  --sidebar-primary: oklch(0.74 0.12 75);
-  --sidebar-primary-foreground: oklch(0.13 0.02 265);
-  --sidebar-accent: oklch(0.22 0.03 265);
-  --sidebar-accent-foreground: oklch(0.93 0.015 250);
-  --sidebar-border: oklch(0.9 0.02 250 / 12%);
-  --sidebar-ring: oklch(0.74 0.12 75);
+  /* Karoo cosmos — night leg: ink violet sky, turquoise rail light. */
+  --background: oklch(0.115 0.035 292);
+  --foreground: oklch(0.93 0.02 275);
+  --card: oklch(0.155 0.04 292);
+  --card-foreground: oklch(0.93 0.02 275);
+  --popover: oklch(0.15 0.04 292);
+  --popover-foreground: oklch(0.93 0.02 275);
+  --primary: oklch(0.8 0.14 192);
+  --primary-foreground: oklch(0.12 0.035 292);
+  --secondary: oklch(0.22 0.045 292);
+  --secondary-foreground: oklch(0.93 0.02 275);
+  --muted: oklch(0.205 0.04 292);
+  --muted-foreground: oklch(0.7 0.035 285);
+  --accent: oklch(0.26 0.055 292);
+  --accent-foreground: oklch(0.95 0.02 275);
+  --destructive: oklch(0.62 0.18 20);
+  --destructive-foreground: oklch(0.97 0.01 275);
+  --border: oklch(0.9 0.03 280 / 13%);
+  --input: oklch(0.9 0.03 280 / 17%);
+  --ring: oklch(0.8 0.14 192);
+  --rail: oklch(0.78 0.15 320);
+  --ember: oklch(0.82 0.13 192);
+  --sand: oklch(0.9 0.04 280);
+  --dust: oklch(0.52 0.04 288);
+  --thread-diamond: oklch(0.9 0.08 205);
+  --thread-name: oklch(0.82 0.14 135);
+  --thread-water: oklch(0.8 0.13 210);
+  --thread-conflict: oklch(0.74 0.17 350);
+  --sidebar: oklch(0.155 0.04 292);
+  --sidebar-foreground: oklch(0.93 0.02 275);
+  --sidebar-primary: oklch(0.8 0.14 192);
+  --sidebar-primary-foreground: oklch(0.12 0.035 292);
+  --sidebar-accent: oklch(0.22 0.045 292);
+  --sidebar-accent-foreground: oklch(0.93 0.02 275);
+  --sidebar-border: oklch(0.9 0.03 280 / 13%);
+  --sidebar-ring: oklch(0.8 0.14 192);
 }
 
 @layer base {
@@ -194,11 +199,11 @@
   font-family: var(--font-sans);
 }
 .leaflet-tile-pane {
-  filter: grayscale(0.55) saturate(0.7) brightness(0.78) contrast(1.05) sepia(0.25);
+  filter: grayscale(0.7) brightness(0.62) contrast(1.1) sepia(0.4) hue-rotate(120deg) saturate(1.4);
   transition: filter 1.2s linear;
 }
 .dark .leaflet-tile-pane {
-  filter: grayscale(0.85) brightness(0.42) contrast(1.15) hue-rotate(190deg);
+  filter: grayscale(0.9) brightness(0.4) contrast(1.2) sepia(0.5) hue-rotate(230deg) saturate(1.6);
 }
 .leaflet-control-attribution {
   background: color-mix(in oklab, var(--background) 78%, transparent) !important;
@@ -234,4 +239,28 @@
 @keyframes twinkle {
   0%, 100% { opacity: 0.15; }
   50% { opacity: 0.85; }
+}
+
+/* Ndebele-inspired chevron strip: signature band under the header. */
+@utility ndebele-strip {
+  height: 4px;
+  background:
+    repeating-linear-gradient(
+      135deg,
+      var(--primary) 0 10px,
+      var(--rail) 10px 20px,
+      var(--thread-water) 20px 30px,
+      var(--thread-name) 30px 40px
+    );
+  opacity: 0.85;
+}
+
+/* Beadwork track: isiZulu/Xhosa beadstring texture for the timeline rail. */
+@utility beadwork {
+  background-image: radial-gradient(
+    circle at 3px 50%,
+    color-mix(in oklab, var(--sand) 55%, transparent) 0 1.6px,
+    transparent 1.9px
+  );
+  background-size: 6px 100%;
 }
