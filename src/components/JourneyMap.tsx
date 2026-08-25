@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import type { Map as LeafletMap, Marker, Polyline, CircleMarker } from "leaflet";
-import { ROUTE } from "@/data/route";
+import { ROUTE, ROUTE_KM } from "@/data/route";
 import { STOPS, type Stop } from "@/data/stops";
 import { positionAtKm } from "@/lib/journey";
 
@@ -85,7 +85,11 @@ export default function JourneyMap({ km, follow, night, activeId, onSelect }: Pr
     const pos = positionAtKm(km);
     train.current?.setLatLng(pos);
     if (travelled.current) {
-      const done = ROUTE.filter((_, i) => i === 0 || positionAtKm(km) && ROUTE_KM_LTE(i, km));
+      const done: [number, number][] = [];
+      for (let i = 0; i < ROUTE.length; i++) {
+        if (ROUTE_KM[i] <= km) done.push(ROUTE[i]);
+        else break;
+      }
       travelled.current.setLatLngs([...done, pos]);
     }
     if (follow && map.current) {
@@ -111,10 +115,4 @@ export default function JourneyMap({ km, follow, night, activeId, onSelect }: Pr
   }, [night]);
 
   return <div ref={holder} className="h-full w-full" aria-label="Map of the Cape main line" />;
-}
-
-// Local helper kept out of render: is route index i already travelled?
-import { ROUTE_KM } from "@/data/route";
-function ROUTE_KM_LTE(i: number, km: number) {
-  return ROUTE_KM[i] <= km;
 }
