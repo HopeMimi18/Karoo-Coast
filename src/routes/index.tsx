@@ -6,17 +6,69 @@ import { TOTAL_KM, fmtKm } from "@/lib/journey";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import SiteHeader from "@/components/SiteHeader";
+import heroTrain from "@/assets/hero-train.jpg";
+import biomeHighveld from "@/assets/biome-highveld.jpg";
+import biomeGariep from "@/assets/biome-gariep.jpg";
+import biomeKaroo from "@/assets/biome-karoo.jpg";
+import biomeFynbos from "@/assets/biome-fynbos.jpg";
+import trainInterior from "@/assets/train-interior.jpg";
+
+const BIOMES = [
+  {
+    img: biomeHighveld,
+    alt: "Highveld grassland with railway tracks and summer thunderclouds",
+    km: "km 0 · Johannesburg / Pretoria",
+    title: "Highveld grassland",
+    body: "Gold-reef country: mine headgear on the horizon, thunderheads building over open veld as the train pulls south.",
+  },
+  {
+    img: biomeGariep,
+    alt: "Steel railway bridge over the green Orange River in arid Northern Cape",
+    km: "km 700 · !Gariep",
+    title: "The Orange River",
+    body: "The line crosses the country's biggest river into the Northern Cape — the water story that made irrigation towns possible.",
+  },
+  {
+    img: biomeKaroo,
+    alt: "Great Karoo scrubland at dusk with railway line and violet sky",
+    km: "km 900 · Great Karoo",
+    title: "Great Karoo",
+    body: "Hundreds of kilometres of silence, crossed mostly at night under one of the darkest skies on earth.",
+  },
+  {
+    img: biomeFynbos,
+    alt: "Cape fynbos with protea flowers, mountains and ocean beyond",
+    km: "km 1 450 · Cape fold belt",
+    title: "Fynbos & the fold mountains",
+    body: "Through the Hex River tunnels into the winelands, where protea veld runs down to the coast.",
+  },
+  {
+    img: trainInterior,
+    alt: "Wood-panelled corridor of a vintage South African passenger coach",
+    km: "26 hours on board",
+    title: "Life in the coach",
+    body: "Corridors, compartments and window seats — the slow travel that makes the country between the endpoints worth seeing.",
+  },
+  {
+    img: heroTrain,
+    alt: "Train on a mountain pass at sunset",
+    km: "km 1 546 · ||Hui !Gaeb",
+    title: "Cape Town arrival",
+    body: "Down the pass to Table Bay: the end of the Cape main line and the start of everything the peninsula offers.",
+  },
+] as const;
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Track 1067 — interactive Pretoria to Cape Town rail journey" },
+      { title: "Karoo & Coast — interactive Pretoria to Cape Town rail journey" },
       {
         name: "description",
         content:
           "Your hub for the Cape main line: ride an animated map of the 1 546 km route, plan a trip, collect station stamps, test yourself on route trivia and share stories in five South African languages.",
       },
-      { property: "og:title", content: "Track 1067 — ride, plan, collect, share" },
+      { property: "og:title", content: "Karoo & Coast — ride, plan, collect, share" },
       {
         property: "og:description",
         content: "An interactive rail tourism platform for the Pretoria/Johannesburg to Cape Town line.",
@@ -118,13 +170,23 @@ function Home() {
     <div className="min-h-dvh bg-background text-foreground">
       <SiteHeader />
 
-      <section className="mx-auto max-w-6xl px-5 pt-12 pb-10">
+      <section className="relative isolate overflow-hidden">
+        <img
+          src={heroTrain}
+          alt="Passenger train curving through the Hex River mountain pass at dusk"
+          width={1920}
+          height={1088}
+          className="absolute inset-0 -z-10 h-full w-full object-cover opacity-45"
+        />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-background via-background/85 to-background/40" />
+        <div className="mx-auto max-w-6xl px-5 pt-16 pb-12">
         <p className="mono-label text-dust">Geekulcha Train Tourism · Cape main line</p>
+
         <h1 className="mt-3 max-w-3xl text-5xl leading-[0.95] sm:text-7xl">
           Ride the <span className="text-primary">1 546 km</span> between Pretoria and Cape Town — and make it yours.
         </h1>
         <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground">
-          Track 1067 turns South Africa's longest passenger line into something you can travel through: an animated
+          Karoo & Coast turns South Africa's longest passenger line into something you can travel through: an animated
           map on real rail geometry, the stories of every station, and a passport that fills up as you go.
         </p>
 
@@ -158,7 +220,36 @@ function Home() {
             </div>
           ))}
         </dl>
+        </div>
       </section>
+
+      {/* Biomes */}
+      <section className="mx-auto max-w-6xl px-5 pb-12">
+        <p className="mono-label text-dust">Five worlds in one ride</p>
+        <h2 className="mt-2 max-w-2xl text-3xl leading-tight sm:text-4xl">
+          From highveld thunder to fynbos and the sea
+        </h2>
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {BIOMES.map((b) => (
+            <figure key={b.title} className="overflow-hidden rounded-sm border border-border bg-card">
+              <img
+                src={b.img}
+                alt={b.alt}
+                loading="lazy"
+                width={1024}
+                height={768}
+                className="h-44 w-full object-cover"
+              />
+              <figcaption className="p-4">
+                <p className="font-mono text-[11px] text-dust">{b.km}</p>
+                <h3 className="mt-1 text-xl leading-none">{b.title}</h3>
+                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{b.body}</p>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+
 
       {/* Your journey */}
       <section className="mx-auto max-w-6xl px-5 pb-10">
@@ -241,7 +332,7 @@ function Home() {
       </section>
 
       <footer className="border-t border-border px-5 py-8 text-center font-mono text-[11px] text-dust">
-        Track 1067 ·{" "}
+        Karoo & Coast ·{" "}
         <Link to="/about" className="text-primary underline-offset-4 hover:underline">
           how it was built
         </Link>{" "}

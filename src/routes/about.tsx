@@ -6,13 +6,13 @@ import { STOPS } from "@/data/stops";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About Track 1067 — how the Cape line map was built" },
+      { title: "About Karoo & Coast — how the Cape line map was built" },
       {
         name: "description",
         content:
-          "How Track 1067 works: real OpenStreetMap rail geometry for relation 950176, a 26-hour journey clock, five South African languages, and an interface that follows the sun.",
+          "How Karoo & Coast works: real OpenStreetMap rail geometry for relation 950176, a 26-hour journey clock, five South African languages, and an interface that follows the sun.",
       },
-      { property: "og:title", content: "About Track 1067" },
+      { property: "og:title", content: "About Karoo & Coast" },
       {
         property: "og:description",
         content: "Real rail geometry, a live journey clock and five languages behind the Cape main line map.",
@@ -32,7 +32,7 @@ function About() {
         ← back to the train
       </Link>
       <h1 className="mt-6 text-5xl leading-none">
-        Track <span className="text-primary">1067</span>
+        Karoo <span className="text-primary">&amp; Coast</span>
       </h1>
       <p className="mt-3 text-muted-foreground">
         1 067 mm is the Cape gauge — the width chosen to get a railway over the Hex River Mountains, and now the

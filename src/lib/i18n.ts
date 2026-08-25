@@ -11,7 +11,7 @@ export const LANGS: { id: Lang; label: string; native: string; speech: string }[
 type Dict = Record<string, string>;
 
 const en: Dict = {
-  title: "Track 1067",
+  title: "Karoo & Coast",
   subtitle: "Pretoria & Johannesburg to Cape Town, in real time",
   ride: "Ride the line",
   play: "Depart",

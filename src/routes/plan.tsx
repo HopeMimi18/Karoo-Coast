@@ -13,9 +13,9 @@ export const Route = createFileRoute("/plan")({
       {
         name: "description",
         content:
-          "Choose the stations and storylines that interest you, and Track 1067 builds a saved itinerary down the Johannesburg to Cape Town line with distances, arrival times and what to see at each stop.",
+          "Choose the stations and storylines that interest you, and Karoo & Coast builds a saved itinerary down the Johannesburg to Cape Town line with distances, arrival times and what to see at each stop.",
       },
-      { property: "og:title", content: "Plan a trip — Track 1067" },
+      { property: "og:title", content: "Plan a trip — Karoo & Coast" },
       { property: "og:description", content: "Build and save your own rail itinerary along the Cape main line." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

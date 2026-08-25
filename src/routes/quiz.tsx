@@ -15,7 +15,7 @@ export const Route = createFileRoute("/quiz")({
         content:
           "Ten questions about the Johannesburg to Cape Town railway: the 1 067 mm gauge, Kimberley's Big Hole, the De Aar junction, the Hex River tunnels and the names beneath the map.",
       },
-      { property: "og:title", content: "Route challenge — Track 1067" },
+      { property: "og:title", content: "Route challenge — Karoo & Coast" },
       { property: "og:description", content: "Test your knowledge of the Cape main line and score points." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
