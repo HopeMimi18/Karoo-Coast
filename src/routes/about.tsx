@@ -32,7 +32,7 @@ function About() {
         ← back to the train
       </Link>
       <h1 className="mt-6 text-5xl leading-none">
-        Track <span className="text-primary">1067</span>
+        Karoo <span className="text-primary">&amp; Coast</span>
       </h1>
       <p className="mt-3 text-muted-foreground">
         1 067 mm is the Cape gauge — the width chosen to get a railway over the Hex River Mountains, and now the

@@ -17,7 +17,7 @@ export default function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-border bg-background/85 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-5 gap-y-2 px-5 py-3">
         <Link to="/" className="text-xl leading-none">
-          Track <span className="text-primary">1067</span>
+          Karoo <span className="text-primary">&amp; Coast</span>
         </Link>
         <nav className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
           {NAV.map((n) => (

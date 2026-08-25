@@ -197,7 +197,7 @@ function Journey() {
       <header className="pointer-events-none absolute inset-x-0 top-0 z-[1200] flex flex-wrap items-start justify-between gap-3 p-4 sm:p-5">
         <div className="pointer-events-auto rounded-sm border border-border bg-card/85 px-4 py-3 backdrop-blur-md">
           <Link to="/" className="text-2xl leading-none">
-            Track <span className="text-primary">1067</span>
+            Karoo <span className="text-primary">&amp; Coast</span>
           </Link>
           <p className="mt-1 max-w-[22rem] text-[11px] leading-tight text-muted-foreground">
             {t(lang, "subtitle")}
