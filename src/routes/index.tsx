@@ -118,8 +118,18 @@ function Home() {
     <div className="min-h-dvh bg-background text-foreground">
       <SiteHeader />
 
-      <section className="mx-auto max-w-6xl px-5 pt-12 pb-10">
+      <section className="relative isolate overflow-hidden">
+        <img
+          src={heroTrain}
+          alt="Passenger train curving through the Hex River mountain pass at dusk"
+          width={1920}
+          height={1088}
+          className="absolute inset-0 -z-10 h-full w-full object-cover opacity-45"
+        />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-background via-background/85 to-background/40" />
+        <div className="mx-auto max-w-6xl px-5 pt-16 pb-12">
         <p className="mono-label text-dust">Geekulcha Train Tourism · Cape main line</p>
+
         <h1 className="mt-3 max-w-3xl text-5xl leading-[0.95] sm:text-7xl">
           Ride the <span className="text-primary">1 546 km</span> between Pretoria and Cape Town — and make it yours.
         </h1>
