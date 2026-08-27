@@ -198,5 +198,16 @@ export function nextWindowCast(km: number): { cast: WindowCast; stop: Stop; dist
 }
 
 export function stationIntelligence(stopId: string): StationIntelligence | undefined {
-  return STATION_INTELLIGENCE.find((station) => station.stopId === stopId);
+  const curated = STATION_INTELLIGENCE.find((station) => station.stopId === stopId);
+  if (curated) return curated;
+
+  const stop = stopById(stopId);
+  if (!stop || stop.kind !== "stop") return undefined;
+
+  return {
+    stopId,
+    stationNote: `${stop.name} becomes a local discovery point in Station Mode — connecting the rail journey to food, accommodation and verified tourism opportunities around the stop.`,
+    services: ["Local discovery", "Food nearby", "Stay nearby", "Maps links"],
+    nearby: [],
+  };
 }
