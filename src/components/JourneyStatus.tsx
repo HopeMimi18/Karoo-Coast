@@ -4,7 +4,7 @@ import { TOTAL_KM, clockAtKm, fmtKm, minutesAtKm } from "@/lib/journey";
 type Props = {
   km: number;
   active: Stop;
-  nextStation?: Stop;
+  nextStation?: Stop | undefined;
   mode: "demo" | "gps";
   gpsStatus?: string | null;
   onDemo: () => void;
