@@ -44,14 +44,14 @@ export default function JourneyMap({ km, follow, night, activeId, onSelect }: Pr
       // Pretoria gateway is deliberately shown as a schematic station-to-station
       // connection; the detailed Cape main-line geometry starts at Park Station.
       L.polyline(PRETORIA_GATEWAY_ROUTE, {
-        color: "#8a8078",
+        color: "#2D7073",
         weight: 2.5,
         opacity: 0.75,
         dashArray: "7 7",
       }).addTo(m);
-      L.polyline(ROUTE.slice(GATEWAY_POINT_COUNT - 1), { color: "#8a8078", weight: 2.5, opacity: 0.55 }).addTo(m);
+      L.polyline(ROUTE.slice(GATEWAY_POINT_COUNT - 1), { color: "#2D7073", weight: 2.5, opacity: 0.55 }).addTo(m);
       travelled.current = L.polyline([ROUTE[0]!], {
-        color: "#e0813f",
+        color: "#C56F3D",
         weight: 4,
         opacity: 0.95,
       }).addTo(m);
@@ -60,8 +60,8 @@ export default function JourneyMap({ km, follow, night, activeId, onSelect }: Pr
         const dot = L.circleMarker([s.lat, s.lon], {
           radius: s.kind === "stop" ? 4.5 + s.weight : 3.5,
           weight: 1.5,
-          color: "#e6d9c6",
-          fillColor: s.kind === "stop" ? "#2a2018" : "#8a8078",
+          color: "#E7D7BF",
+          fillColor: s.kind === "stop" ? "#0B1F33" : "#2D7073",
           fillOpacity: 1,
         })
           .addTo(m)
@@ -72,7 +72,7 @@ export default function JourneyMap({ km, follow, night, activeId, onSelect }: Pr
 
       const icon = L.divIcon({
         className: "",
-        html: `<div class="relative h-4 w-4 train-pulse"><div class="absolute inset-0 rounded-full bg-[#e0813f] ring-2 ring-[#fff3e2]"></div></div>`,
+        html: `<div class="relative h-4 w-4 train-pulse"><div class="absolute inset-0 rounded-full bg-[#C56F3D] ring-2 ring-[#F5F1E8]"></div></div>`,
         iconSize: [16, 16],
         iconAnchor: [8, 8],
       });
@@ -110,8 +110,8 @@ export default function JourneyMap({ km, follow, night, activeId, onSelect }: Pr
     for (const [id, dot] of Object.entries(dots.current)) {
       const on = id === activeId;
       dot.setStyle({
-        fillColor: on ? "#e0813f" : STOPS.find((s) => s.id === id)?.kind === "stop" ? "#2a2018" : "#8a8078",
-        color: on ? "#fff3e2" : "#e6d9c6",
+        fillColor: on ? "#C56F3D" : STOPS.find((s) => s.id === id)?.kind === "stop" ? "#0B1F33" : "#2D7073",
+        color: on ? "#F5F1E8" : "#E7D7BF",
         weight: on ? 3 : 1.5,
       });
       if (on) dot.bringToFront();

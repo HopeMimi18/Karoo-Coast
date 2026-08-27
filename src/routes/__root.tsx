@@ -85,7 +85,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:description", content: "Turn the Pretoria-to-Cape Town train journey into a destination with route-aware stories and tourism discovery." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "theme-color", content: "#132c2d" },
+      { name: "theme-color", content: "#0B1F33" },
     ],
     links: [
       {
