@@ -1,4 +1,4 @@
-export type LocalPlaceKind = "eat" | "stay";
+export type LocalPlaceKind = "attraction" | "eat" | "stay";
 
 export type LocalPlace = {
   name: string;
@@ -15,15 +15,39 @@ export type LocalDiscovery = {
 };
 
 /**
- * Curated tourism-business examples researched for the hackathon prototype.
- * Listings were checked against public business/tourism sources in August 2026.
- * Hours, availability and operating status can change; the UI deliberately sends
- * travellers to Maps for current details instead of presenting stale live data.
+ * Curated prototype discovery data for station-area tourism.
+ * - attraction entries are editorial tourism picks.
+ * - eat/stay entries demonstrate the future paid-partner inventory model.
+ *
+ * Prototype business examples do NOT imply that the businesses currently
+ * sponsor or endorse Karoo & Coast. Production placements should be sold,
+ * verified and clearly disclosed as sponsored/partner content.
  */
 export const LOCAL_DISCOVERY: Record<string, LocalDiscovery> = {
   pretoria: {
     areaLabel: "Pretoria Central / Salvokop",
     places: [
+      {
+        name: "Freedom Park",
+        kind: "attraction",
+        subtype: "Heritage & culture",
+        note: "A major national heritage landscape overlooking the Salvokop and Pretoria Station precinct.",
+        location: "Salvokop, Pretoria",
+      },
+      {
+        name: "Melrose House Museum",
+        kind: "attraction",
+        subtype: "Museum",
+        note: "Historic house museum within the central Pretoria visitor area and close to the main station.",
+        location: "275 Jeff Masemola Street, Pretoria Central",
+      },
+      {
+        name: "Voortrekker Monument",
+        kind: "attraction",
+        subtype: "Heritage landmark",
+        note: "Major Pretoria landmark with panoramic views, museum experiences and South African historical interpretation.",
+        location: "Eeufees Road, Groenkloof, Pretoria",
+      },
       {
         name: "Rockefeller Restaurant by Manhattan Hotel",
         kind: "eat",
@@ -44,6 +68,20 @@ export const LOCAL_DISCOVERY: Record<string, LocalDiscovery> = {
     areaLabel: "Park Station / Braamfontein",
     places: [
       {
+        name: "Constitution Hill",
+        kind: "attraction",
+        subtype: "Heritage & human rights",
+        note: "Museum, former prison complex and Constitutional Court precinct linking the city to South Africa's democratic story.",
+        location: "11 Kotze Street, Braamfontein, Johannesburg",
+      },
+      {
+        name: "Sci-Bono Discovery Centre",
+        kind: "attraction",
+        subtype: "Science & family",
+        note: "Interactive science centre in nearby Newtown that adds a family-friendly city experience to a Johannesburg stopover.",
+        location: "Helen Joseph Street, Newtown, Johannesburg",
+      },
+      {
         name: "Fishaways Park Station",
         kind: "eat",
         subtype: "Restaurant",
@@ -60,8 +98,22 @@ export const LOCAL_DISCOVERY: Record<string, LocalDiscovery> = {
     ],
   },
   klerksdorp: {
-    areaLabel: "Klerksdorp",
+    areaLabel: "Klerksdorp / Matlosana",
     places: [
+      {
+        name: "Klerksdorp Museum",
+        kind: "attraction",
+        subtype: "Museum & heritage",
+        note: "The former Old Klerksdorp Prison now interprets local history, cultural heritage, prison history and Khoisan rock art.",
+        location: "Klerksdorp Museum, Klerksdorp",
+      },
+      {
+        name: "Faan Meintjes Nature Reserve",
+        kind: "attraction",
+        subtype: "Nature reserve",
+        note: "A wider Klerksdorp-area nature experience for travellers turning a rail stop into a half-day or overnight excursion.",
+        location: "Faan Meintjes Nature Reserve, Klerksdorp",
+      },
       {
         name: "Voerkraal Restaurant Klerksdorp",
         kind: "eat",
@@ -82,6 +134,20 @@ export const LOCAL_DISCOVERY: Record<string, LocalDiscovery> = {
     areaLabel: "Bloemhof",
     places: [
       {
+        name: "Bloemhof Dam Nature Reserve",
+        kind: "attraction",
+        subtype: "Nature & water",
+        note: "Dam and grassland reserve known for waterbirds, game viewing, angling and broad Highveld landscapes.",
+        location: "Bloemhof Dam Nature Reserve, Bloemhof",
+      },
+      {
+        name: "Sandveld Nature Reserve",
+        kind: "attraction",
+        subtype: "Nature reserve",
+        note: "Wildlife and birding destination around the Bloemhof Dam environment.",
+        location: "Sandveld Nature Reserve, Bloemhof",
+      },
+      {
         name: "Buffalo Restaurant",
         kind: "eat",
         subtype: "Bar & grill",
@@ -98,8 +164,22 @@ export const LOCAL_DISCOVERY: Record<string, LocalDiscovery> = {
     ],
   },
   christiana: {
-    areaLabel: "Christiana",
+    areaLabel: "Christiana / Vaal River",
     places: [
+      {
+        name: "Diggers' Diamond Museum",
+        kind: "attraction",
+        subtype: "Diamond heritage",
+        note: "Local museum interpreting Christiana's diamond-digging history and early mining equipment.",
+        location: "Christiana, North West",
+      },
+      {
+        name: "Vaal River at Christiana",
+        kind: "attraction",
+        subtype: "River experience",
+        note: "The river is one of Christiana's defining visitor experiences, supporting fishing, boating and waterside leisure.",
+        location: "Vaal River, Christiana, North West",
+      },
       {
         name: "Vaal de Vue Guest House and Restaurant",
         kind: "eat",
@@ -117,8 +197,22 @@ export const LOCAL_DISCOVERY: Record<string, LocalDiscovery> = {
     ],
   },
   warrenton: {
-    areaLabel: "Warrenton",
+    areaLabel: "Warrenton / Vaal-Harts",
     places: [
+      {
+        name: "Vaal-Harts Dam",
+        kind: "attraction",
+        subtype: "Water & engineering",
+        note: "Part of the Vaalharts irrigation story — a strong fit for Karoo & Coast's water and infrastructure narrative.",
+        location: "Vaal-Harts Dam, Warrenton, Northern Cape",
+      },
+      {
+        name: "Nazareth House Mission Station",
+        kind: "attraction",
+        subtype: "Local heritage",
+        note: "Historic mission site outside Warrenton that adds a lesser-known local heritage stop to the route.",
+        location: "Nazareth House Mission Station, Warrenton",
+      },
       {
         name: "Warrenton Pub and Grill",
         kind: "eat",
@@ -139,6 +233,27 @@ export const LOCAL_DISCOVERY: Record<string, LocalDiscovery> = {
     areaLabel: "Kimberley",
     places: [
       {
+        name: "The Big Hole & Kimberley Mine Museum",
+        kind: "attraction",
+        subtype: "Diamond heritage",
+        note: "Kimberley's signature visitor experience, combining the historic mine, viewing platform, museum and reconstructed Old Town.",
+        location: "West Circular Road, Kimberley",
+      },
+      {
+        name: "McGregor Museum",
+        kind: "attraction",
+        subtype: "Museum",
+        note: "Major regional museum with natural-history, archaeology and cultural-history collections connected to the Northern Cape.",
+        location: "Atlas Street, Belgravia, Kimberley",
+      },
+      {
+        name: "William Humphreys Art Gallery",
+        kind: "attraction",
+        subtype: "Art & culture",
+        note: "A cultural stop that broadens Kimberley's visitor experience beyond its diamond history.",
+        location: "Cullinan Crescent, Civic Centre, Kimberley",
+      },
+      {
         name: "The Hussar Grill Kimberley",
         kind: "eat",
         subtype: "Steakhouse",
@@ -155,9 +270,30 @@ export const LOCAL_DISCOVERY: Record<string, LocalDiscovery> = {
     ],
   },
   "orange-river": {
-    areaLabel: "Hopetown / Orange River",
+    areaLabel: "Orange River Station / Hopetown",
     accessNote: "The rail stop sits outside the main Hopetown visitor cluster; allow for local road transfer when planning a stopover.",
     places: [
+      {
+        name: "Star of South Africa Marker",
+        kind: "attraction",
+        subtype: "Diamond heritage",
+        note: "A Church Street window preserves the cutting mark used to test the famous Star of South Africa diamond.",
+        location: "33 Church Street, Hopetown",
+      },
+      {
+        name: "Old Wagon Bridge",
+        kind: "attraction",
+        subtype: "Historic landmark",
+        note: "Historic Orange River crossing that predates the Anglo-Boer War and reinforces the route's transport story.",
+        location: "Old Wagon Bridge, Hopetown",
+      },
+      {
+        name: "Orange River Station Blockhouse",
+        kind: "attraction",
+        subtype: "Rail & conflict heritage",
+        note: "A route-specific heritage point connecting the railway corridor to the South African War story.",
+        location: "Orange River Station, near Hopetown",
+      },
       {
         name: "Die Stalle Restaurant",
         kind: "eat",
@@ -178,6 +314,20 @@ export const LOCAL_DISCOVERY: Record<string, LocalDiscovery> = {
     areaLabel: "De Aar",
     places: [
       {
+        name: "Olive Schreiner House",
+        kind: "attraction",
+        subtype: "Literary heritage",
+        note: "A local heritage stop connected to the influential South African author who lived in De Aar.",
+        location: "Grundlingh Street, De Aar",
+      },
+      {
+        name: "Garden of Remembrance",
+        kind: "attraction",
+        subtype: "War memorial",
+        note: "Memorial space connected to British troops who died during the South African War.",
+        location: "Garden of Remembrance, De Aar",
+      },
+      {
         name: "Pringles Pub and Restaurant",
         kind: "eat",
         subtype: "Restaurant",
@@ -194,8 +344,22 @@ export const LOCAL_DISCOVERY: Record<string, LocalDiscovery> = {
     ],
   },
   "beaufort-west": {
-    areaLabel: "Beaufort West",
+    areaLabel: "Beaufort West / Cape Karoo",
     places: [
+      {
+        name: "Karoo National Park",
+        kind: "attraction",
+        subtype: "National park",
+        note: "A major Cape Karoo nature experience with mountain landscapes, wildlife, fossils and dark-sky potential.",
+        location: "Karoo National Park, Beaufort West",
+      },
+      {
+        name: "Beaufort West Museum",
+        kind: "attraction",
+        subtype: "Museum & local history",
+        note: "Museum complex that includes the Chris Barnard and medical-science story as well as local cultural history.",
+        location: "87 Donkin Street, Beaufort West",
+      },
       {
         name: "4 Sheep Restaurant Deli and Convenience Store",
         kind: "eat",
@@ -216,6 +380,20 @@ export const LOCAL_DISCOVERY: Record<string, LocalDiscovery> = {
     areaLabel: "Laingsburg",
     places: [
       {
+        name: "Laingsburg Flood Museum",
+        kind: "attraction",
+        subtype: "Museum",
+        note: "Interprets the devastating 1981 flood and preserves local Africana, geology and town-history collections.",
+        location: "Laingsburg Flood Museum, Laingsburg",
+      },
+      {
+        name: "Laingsburg Flood Route",
+        kind: "attraction",
+        subtype: "Heritage route",
+        note: "A route through the town that helps visitors understand the scale and legacy of the 1981 disaster.",
+        location: "Laingsburg, Western Cape",
+      },
+      {
         name: "Tannie Poppie se Roosterkoek",
         kind: "eat",
         subtype: "Restaurant",
@@ -233,8 +411,29 @@ export const LOCAL_DISCOVERY: Record<string, LocalDiscovery> = {
   },
   matjiesfontein: {
     areaLabel: "Matjiesfontein heritage village",
-    accessNote: "Matjiesfontein is unusually compact: the station, hotel, restaurants and heritage village form one walkable visitor experience.",
+    accessNote: "Matjiesfontein is unusually compact: the station, hotel, museums, restaurants and heritage village form one walkable visitor experience.",
     places: [
+      {
+        name: "Transport Museum",
+        kind: "attraction",
+        subtype: "Transport heritage",
+        note: "Vintage vehicles, royal cars, a steam train and railway carriages make this one of the strongest transport-themed stops on the corridor.",
+        location: "Matjiesfontein, Western Cape",
+      },
+      {
+        name: "Marie Rawdon Museum",
+        kind: "attraction",
+        subtype: "Victorian & war heritage",
+        note: "Collection of Victoriana and historical memorabilia housed in the railway-station precinct.",
+        location: "Matjiesfontein Railway Station, Matjiesfontein",
+      },
+      {
+        name: "Matjiesfontein Red Bus Tour",
+        kind: "attraction",
+        subtype: "Heritage experience",
+        note: "A short village orientation that turns the stop itself into an experience rather than simply a pause in the journey.",
+        location: "Matjiesfontein, Western Cape",
+      },
       {
         name: "The Laird's Arms",
         kind: "eat",
@@ -253,7 +452,22 @@ export const LOCAL_DISCOVERY: Record<string, LocalDiscovery> = {
   },
   "touws-river": {
     areaLabel: "Touws River",
+    accessNote: "Some nature experiences require a road transfer from the station; Station Mode should show transfer time when live mobility data becomes available.",
     places: [
+      {
+        name: "Aquila Private Game Reserve",
+        kind: "attraction",
+        subtype: "Safari & wildlife",
+        note: "A major Big Five safari experience in the Touws River area, suitable for a planned day trip or overnight extension.",
+        location: "R46, Touws River",
+      },
+      {
+        name: "Drie Kuilen Nature Reserve",
+        kind: "attraction",
+        subtype: "Nature & outdoor",
+        note: "Wider-area Karoo experience with hiking, cycling, birding, rock art and other outdoor activities.",
+        location: "Nougaspoort Road, Touws River",
+      },
       {
         name: "Patriot Coffee Shop",
         kind: "eat",
@@ -271,8 +485,22 @@ export const LOCAL_DISCOVERY: Record<string, LocalDiscovery> = {
     ],
   },
   worcester: {
-    areaLabel: "Worcester",
+    areaLabel: "Worcester / Breede Valley",
     places: [
+      {
+        name: "Karoo Desert National Botanical Garden",
+        kind: "attraction",
+        subtype: "Botanical garden",
+        note: "A 154-hectare garden showcasing arid-zone biodiversity at the foot of the Hex River Mountain Range.",
+        location: "Karoo Desert National Botanical Garden, Worcester",
+      },
+      {
+        name: "Kleinplasie Worcester Museum",
+        kind: "attraction",
+        subtype: "Living-history museum",
+        note: "A heritage experience that interprets traditional rural life, crafts and local history in the Breede Valley.",
+        location: "Kleinplasie, Worcester",
+      },
       {
         name: "Fowlers Grill",
         kind: "eat",
@@ -290,8 +518,29 @@ export const LOCAL_DISCOVERY: Record<string, LocalDiscovery> = {
     ],
   },
   wellington: {
-    areaLabel: "Wellington",
+    areaLabel: "Wellington / Cape Winelands",
     places: [
+      {
+        name: "Bainskloof Pass",
+        kind: "attraction",
+        subtype: "Scenic & engineering heritage",
+        note: "Historic mountain pass with dramatic views, indigenous vegetation, rock pools and a strong transport-engineering story.",
+        location: "Bainskloof Road, Wellington",
+      },
+      {
+        name: "Breytenbach Centre",
+        kind: "attraction",
+        subtype: "Arts & culture",
+        note: "Local cultural centre that helps connect the railway journey to Wellington's creative identity.",
+        location: "Breytenbach Centre, Wellington",
+      },
+      {
+        name: "Wellington Museum",
+        kind: "attraction",
+        subtype: "Local heritage",
+        note: "A compact stop for travellers interested in the town's history and wider Winelands heritage.",
+        location: "Wellington Museum, Wellington",
+      },
       {
         name: "Cole | The Eatery",
         kind: "eat",
@@ -312,6 +561,20 @@ export const LOCAL_DISCOVERY: Record<string, LocalDiscovery> = {
     areaLabel: "Paarl / Huguenot",
     places: [
       {
+        name: "Afrikaans Language Monument",
+        kind: "attraction",
+        subtype: "Language & heritage",
+        note: "Iconic Paarl Mountain landmark interpreting the influences that shaped Afrikaans and offering extensive valley views.",
+        location: "Gabbema Doordrift Street, Paarl Mountain, Paarl",
+      },
+      {
+        name: "Paarl Mountain Nature Reserve",
+        kind: "attraction",
+        subtype: "Nature & outdoor",
+        note: "Fynbos-rich mountain landscape with hiking, picnic areas and broad views over Paarl and the Winelands.",
+        location: "Paarl Mountain Nature Reserve, Paarl",
+      },
+      {
         name: "Noop",
         kind: "eat",
         subtype: "Restaurant",
@@ -328,8 +591,29 @@ export const LOCAL_DISCOVERY: Record<string, LocalDiscovery> = {
     ],
   },
   bellville: {
-    areaLabel: "Bellville",
+    areaLabel: "Bellville / Tygerberg",
     places: [
+      {
+        name: "Tygerberg Nature Reserve",
+        kind: "attraction",
+        subtype: "Nature reserve",
+        note: "Urban nature reserve with trails, biodiversity and panoramic views over Cape Town, Table Bay and the mountains.",
+        location: "Tygerberg Nature Reserve, Cape Town",
+      },
+      {
+        name: "Cool Runnings",
+        kind: "attraction",
+        subtype: "Family attraction",
+        note: "Africa's first downhill toboggan track and a distinctive family-friendly activity in the Bellville/Tygervalley area.",
+        location: "Carl Cronje Drive, Bellville, Cape Town",
+      },
+      {
+        name: "Tyger Waterfront",
+        kind: "attraction",
+        subtype: "Leisure precinct",
+        note: "Dining, walking and leisure precinct that can support shorter metro stopovers before central Cape Town.",
+        location: "Tyger Waterfront, Bellville, Cape Town",
+      },
       {
         name: "Silver Spur",
         kind: "eat",
@@ -347,8 +631,29 @@ export const LOCAL_DISCOVERY: Record<string, LocalDiscovery> = {
     ],
   },
   "cape-town": {
-    areaLabel: "Cape Town City Centre / Foreshore",
+    areaLabel: "Cape Town City Centre",
     places: [
+      {
+        name: "Castle of Good Hope",
+        kind: "attraction",
+        subtype: "Heritage landmark",
+        note: "One of the city's major historic landmarks and an easy central-city extension from the station precinct.",
+        location: "Darling Street, Cape Town City Centre",
+      },
+      {
+        name: "District Six Museum",
+        kind: "attraction",
+        subtype: "Museum & social history",
+        note: "A powerful community-history experience that connects the city arrival to stories of forced removals, memory and place.",
+        location: "25A Buitenkant Street, Cape Town",
+      },
+      {
+        name: "V&A Waterfront",
+        kind: "attraction",
+        subtype: "Tourism precinct",
+        note: "Major harbour visitor precinct linking the rail journey to museums, restaurants, shopping, cruises and onward Cape Town experiences.",
+        location: "V&A Waterfront, Cape Town",
+      },
       {
         name: "Belly of the Beast",
         kind: "eat",
@@ -368,10 +673,10 @@ export const LOCAL_DISCOVERY: Record<string, LocalDiscovery> = {
 };
 
 export const REMOTE_STOP_NOTES: Record<string, string> = {
-  merriman: "Remote railway siding. No useful nearby restaurant or accommodation listing was verified for the prototype.",
+  merriman: "Remote railway siding. No useful nearby restaurant, accommodation or formal attraction listing was verified for the prototype.",
   hutchinson: "Remote junction. Victoria West is the nearest meaningful visitor centre, so a road transfer would be required.",
-  "leeu-gamka": "Small Karoo rail settlement. Local listings are intentionally withheld until they can be verified with tourism partners.",
-  "prince-albert-road": "The station is far from Prince Albert town itself. Accommodation and dining in Prince Albert require a significant road transfer.",
+  "leeu-gamka": "Small Karoo rail settlement. Local commercial and tourism listings are intentionally withheld until they can be verified with tourism partners.",
+  "prince-albert-road": "The station is far from Prince Albert town itself. Tourism, accommodation and dining in Prince Albert require a significant road transfer.",
 };
 
 export function localDiscovery(stopId: string): LocalDiscovery | undefined {

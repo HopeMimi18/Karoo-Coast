@@ -4,6 +4,13 @@ import { localDiscovery, mapsSearchUrl, remoteStopNote, type LocalPlaceKind } fr
 
 type LocalTab = "all" | LocalPlaceKind;
 
+const TAB_OPTIONS: { value: LocalTab; label: string }[] = [
+  { value: "all", label: "All" },
+  { value: "attraction", label: "📍 Explore" },
+  { value: "eat", label: "🍽 Eat" },
+  { value: "stay", label: "🛏 Stay" },
+];
+
 export default function StationMode({ station }: { station: StationIntelligence }) {
   const [tab, setTab] = useState<LocalTab>("all");
   const local = localDiscovery(station.stopId);
@@ -14,6 +21,7 @@ export default function StationMode({ station }: { station: StationIntelligence 
     return tab === "all" ? local.places : local.places.filter((place) => place.kind === tab);
   }, [local, tab]);
 
+  const attractionCount = local?.places.filter((place) => place.kind === "attraction").length ?? 0;
   const eatCount = local?.places.filter((place) => place.kind === "eat").length ?? 0;
   const stayCount = local?.places.filter((place) => place.kind === "stay").length ?? 0;
 
@@ -41,7 +49,7 @@ export default function StationMode({ station }: { station: StationIntelligence 
 
       {station.nearby.length > 0 && (
         <div className="mt-5">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-dust">Discover nearby</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-dust">Why this stop matters</p>
           <div className="mt-2 space-y-2">
             {station.nearby.map((place) => (
               <div key={place.name} className="rounded-sm border border-border bg-background/45 p-3">
@@ -59,12 +67,13 @@ export default function StationMode({ station }: { station: StationIntelligence 
       <div className="mt-5 rounded-sm border border-border bg-background/35 p-3">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary">Eat & stay nearby</p>
-            <h4 className="mt-1 text-base text-foreground">Local stops worth extending the journey for</h4>
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary">Explore, eat & stay nearby</p>
+            <h4 className="mt-1 text-base text-foreground">Turn the station into a local tourism gateway</h4>
             {local && <p className="mt-1 text-[10px] text-dust">{local.areaLabel}</p>}
           </div>
           {local && (
-            <div className="flex gap-1 font-mono text-[9px] text-dust">
+            <div className="flex flex-wrap gap-1 font-mono text-[9px] text-dust">
+              <span className="rounded-full border border-border px-2 py-1">📍 {attractionCount}</span>
               <span className="rounded-full border border-border px-2 py-1">🍽 {eatCount}</span>
               <span className="rounded-full border border-border px-2 py-1">🛏 {stayCount}</span>
             </div>
@@ -74,11 +83,7 @@ export default function StationMode({ station }: { station: StationIntelligence 
         {local ? (
           <>
             <div className="mt-3 flex flex-wrap gap-1.5" role="tablist" aria-label="Filter nearby places">
-              {([
-                ["all", "All"],
-                ["eat", "🍽 Eat"],
-                ["stay", "🛏 Stay"],
-              ] as const).map(([value, label]) => (
+              {TAB_OPTIONS.map(({ value, label }) => (
                 <button
                   key={value}
                   type="button"
@@ -102,42 +107,62 @@ export default function StationMode({ station }: { station: StationIntelligence 
             )}
 
             <div className="mt-3 space-y-2">
-              {places.map((place) => (
-                <article key={`${place.kind}-${place.name}`} className="rounded-sm border border-border bg-card/70 p-3">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span className="text-sm" aria-hidden="true">{place.kind === "eat" ? "🍽" : "🛏"}</span>
-                        <p className="text-sm text-sand">{place.name}</p>
+              {places.map((place) => {
+                const isCommercial = place.kind === "eat" || place.kind === "stay";
+                const icon = place.kind === "attraction" ? "📍" : place.kind === "eat" ? "🍽" : "🛏";
+
+                return (
+                  <article key={`${place.kind}-${place.name}`} className="rounded-sm border border-border bg-card/70 p-3">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="text-sm" aria-hidden="true">{icon}</span>
+                          <p className="text-sm text-sand">{place.name}</p>
+                          <span
+                            className={`rounded-full border px-1.5 py-0.5 font-mono text-[8px] uppercase tracking-wide ${
+                              isCommercial
+                                ? "border-primary/45 text-primary"
+                                : "border-thread-water/45 text-thread-water"
+                            }`}
+                          >
+                            {isCommercial ? "Promoted slot" : "Tourism pick"}
+                          </span>
+                        </div>
+                        <p className="mt-1 font-mono text-[9px] uppercase tracking-wide text-dust">{place.subtype}</p>
                       </div>
-                      <p className="mt-1 font-mono text-[9px] uppercase tracking-wide text-dust">{place.subtype}</p>
+                      <a
+                        href={mapsSearchUrl(place)}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="shrink-0 rounded-sm border border-border px-2 py-1 font-mono text-[9px] text-muted-foreground hover:border-primary hover:text-primary"
+                      >
+                        Maps ↗
+                      </a>
                     </div>
-                    <a
-                      href={mapsSearchUrl(place)}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="shrink-0 rounded-sm border border-border px-2 py-1 font-mono text-[9px] text-muted-foreground hover:border-primary hover:text-primary"
-                    >
-                      Maps ↗
-                    </a>
-                  </div>
-                  <p className="mt-2 text-[11px] leading-relaxed text-muted-foreground">{place.note}</p>
-                  <p className="mt-2 text-[9px] leading-relaxed text-dust">{place.location}</p>
-                </article>
-              ))}
+                    <p className="mt-2 text-[11px] leading-relaxed text-muted-foreground">{place.note}</p>
+                    <p className="mt-2 text-[9px] leading-relaxed text-dust">{place.location}</p>
+                  </article>
+                );
+              })}
             </div>
           </>
         ) : (
           <div className="mt-3 rounded-sm border border-dashed border-border p-3">
             <p className="text-[11px] leading-relaxed text-muted-foreground">
-              {remoteNote ?? "Verified food and accommodation listings for this stop are still being added."}
+              {remoteNote ?? "Verified tourism, food and accommodation listings for this stop are still being added."}
             </p>
           </div>
         )}
       </div>
 
+      <div className="mt-3 rounded-sm border border-border bg-card/40 px-3 py-2">
+        <p className="font-mono text-[9px] leading-relaxed text-dust">
+          BUSINESS MODEL · In production, restaurant and accommodation cards are paid promotional placements from verified local partners. Prototype examples show the placement format only and do not imply a current sponsorship or endorsement. Tourist-attraction picks remain editorial unless clearly marked otherwise.
+        </p>
+      </div>
+
       <p className="mt-3 font-mono text-[9px] leading-relaxed text-dust">
-        Curated prototype listings researched in Aug 2026. Opening hours, availability and transport access can change — use Maps or the venue directly before travelling. Future production data should come from verified tourism and operator feeds.
+        Prototype discovery data researched in Aug 2026. Opening hours, availability, access and operating status can change — use Maps or the venue directly before travelling. Production data should come from verified tourism and operator feeds.
       </p>
     </section>
   );
