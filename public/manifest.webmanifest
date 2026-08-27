@@ -1,0 +1,9 @@
+{
+  "name": "Karoo & Coast",
+  "short_name": "Karoo & Coast",
+  "description": "A Pretoria-to-Cape Town rail tourism journey companion.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#132c2d",
+  "theme_color": "#132c2d"
+}
