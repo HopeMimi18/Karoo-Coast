@@ -89,7 +89,7 @@ export function elapsedLabel(km: number): string {
 }
 
 export function fmtKm(km: number): string {
-  return `${Math.round(km).toLocaleString("en-ZA")} km`;
+  return `${Math.round(km).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")} km`;
 }
 
 
