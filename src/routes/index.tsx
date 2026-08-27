@@ -342,7 +342,19 @@ function Home() {
             The result is more immersive than a normal tourism app and more experiential than a traditional railway app.
           </p>
         </div>
+
+        <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-border pt-6">
+          <p className="mono-label text-dust">Research lens</p>
+          <div className="flex flex-wrap gap-2 font-mono text-[10px]">
+            {RESEARCH_BADGES.map((item) => (
+              <span key={item} className="border border-border px-2.5 py-1 text-sand">
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
       </section>
+
 
 
       <section className="mx-auto max-w-6xl px-5 pb-12">
