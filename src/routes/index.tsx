@@ -7,7 +7,6 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import SiteHeader from "@/components/SiteHeader";
 import heroTrain from "@/assets/hero-train.jpg";
-import biomeHighveld from "@/assets/biome-highveld.jpg";
 import biomeGariep from "@/assets/biome-gariep.jpg";
 import biomeKaroo from "@/assets/biome-karoo.jpg";
 import biomeFynbos from "@/assets/biome-fynbos.jpg";
@@ -15,46 +14,32 @@ import trainInterior from "@/assets/train-interior.jpg";
 
 const BIOMES = [
   {
-    img: biomeHighveld,
-    alt: "Highveld grassland with railway tracks and summer thunderclouds",
-    km: "km 0 · Pretoria / Highveld",
-    title: "Highveld grassland",
-    body: "Gold-reef country: mine headgear on the horizon, thunderheads building over open veld as the train pulls south.",
-  },
-  {
     img: biomeGariep,
-    alt: "Steel railway bridge over the green Orange River in arid Northern Cape",
-    km: "around km 660 · !Gariep",
-    title: "The Orange River",
-    body: "The line crosses the country's biggest river into the Northern Cape — the water story that made irrigation towns possible.",
+    alt: "A real photograph of a bridge crossing the Orange River in South Africa",
+    km: "around km 660 · !Gariep / Orange River",
+    title: "The Orange River crossing",
+    body: "One of the big threshold moments on the route: the line reaches the country's great river and opens into the long distances of the Northern Cape.",
   },
   {
     img: biomeKaroo,
-    alt: "Great Karoo scrubland at dusk with railway line and violet sky",
+    alt: "A real photograph of a road and scrub landscape in the Great Karoo",
     km: "around km 950 · Great Karoo",
     title: "Great Karoo",
-    body: "Hundreds of kilometres of silence, crossed mostly at night under one of the darkest skies on earth.",
+    body: "Dry air, open horizons and huge skies define the middle of the journey — the slow, quiet heart of the South African interior.",
   },
   {
     img: biomeFynbos,
-    alt: "Cape fynbos with protea flowers, mountains and ocean beyond",
-    km: "around km 1 500 · Cape fold belt",
-    title: "Fynbos & the fold mountains",
-    body: "Through the Hex River tunnels into the winelands, where protea veld runs down to the coast.",
+    alt: "A real photograph of the Hex River Valley and surrounding mountains",
+    km: "around km 1 380 · Hex River Valley",
+    title: "Hex River & the winelands gateway",
+    body: "Mountain walls, vineyards and dramatic passes mark the approach into the Cape — one of the most scenic sections of the whole line.",
   },
   {
     img: trainInterior,
-    alt: "Wood-panelled corridor of a vintage South African passenger coach",
-    km: "~27 hours in the prototype",
+    alt: "A real photograph of the interior of a South African passenger coach",
+    km: "on board · the travel experience",
     title: "Life in the coach",
-    body: "Corridors, compartments and window seats — the slow travel that makes the country between the endpoints worth seeing.",
-  },
-  {
-    img: heroTrain,
-    alt: "Train on a mountain pass at sunset",
-    km: "journey end · ||Hui !Gaeb",
-    title: "Cape Town arrival",
-    body: "Down the pass to Table Bay: the end of the Cape main line and the start of everything the peninsula offers.",
+    body: "The journey is not only about destinations. Window seats, carriage conversations and the rhythm of the track are part of the experience too.",
   },
 ] as const;
 
@@ -173,7 +158,7 @@ function Home() {
       <section className="relative isolate overflow-hidden">
         <img
           src={heroTrain}
-          alt="Passenger train curving through the Hex River mountain pass at dusk"
+          alt="Real landscape photograph of the Hex River Valley near the Cape rail approach"
           width={1920}
           height={1088}
           className="absolute inset-0 -z-10 h-full w-full object-cover opacity-45"
@@ -259,11 +244,11 @@ function Home() {
         </div>
       </section>
 
-      {/* Biomes */}
+      {/* Real route scenes */}
       <section className="mx-auto max-w-6xl px-5 pb-12">
-        <p className="mono-label text-dust">Five worlds in one ride</p>
+        <p className="mono-label text-dust">Real places on the route</p>
         <h2 className="mt-2 max-w-2xl text-3xl leading-tight sm:text-4xl">
-          From highveld thunder to fynbos and the sea
+          A more grounded visual feel for the journey
         </h2>
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {BIOMES.map((b) => (
