@@ -24,7 +24,7 @@ A route-aware experience layer triggers selected moments as the train approaches
 
 ### Station Mode
 
-Every stopping station can now expose a tourism-discovery panel. Instead of ending at “you reached Kimberley”, the product can continue into “what should I discover, eat or book here?”. Major stops include curated real restaurants plus hotels, guest houses or B&Bs, with direct Maps searches for current directions and operating details. Remote railway sidings are labelled honestly when a useful nearby listing could not be verified. Production availability and booking should ultimately come from verified tourism-partner feeds.
+Every stopping station can now expose a tourism-discovery panel. Instead of ending at “you reached Kimberley”, the product can continue into “what should I explore, eat or book here?”. Station Mode now separates editorial tourist attractions from commercial restaurant and accommodation inventory. In the intended business model, restaurants, hotels, guest houses and B&Bs pay for clearly disclosed promoted placements, while tourism attractions remain editorial unless explicitly sponsored. Direct Maps searches provide current directions, and remote railway sidings are labelled honestly when useful nearby inventory cannot be verified. Production availability and booking should ultimately come from verified tourism-partner feeds.
 
 ### GPS route matching
 
