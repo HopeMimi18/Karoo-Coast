@@ -35,7 +35,7 @@ export default function JourneyMap({ km, follow, night, activeId, onSelect }: Pr
       }).setView([-30.2, 23.6], 6);
       map.current = m;
 
-      L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png", {
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/voyager_nolabels/{z}/{x}/{y}{r}.png", {
         attribution:
           '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a> &middot; Cape main line: OSM relation 950176 &middot; Pretoria gateway: station-to-station schematic',
         maxZoom: 16,
