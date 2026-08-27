@@ -182,144 +182,154 @@ function Home() {
     <div className="min-h-dvh bg-background text-foreground">
       <SiteHeader />
 
-      <section className="relative overflow-hidden border-b border-border">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,hsl(var(--primary)/0.16),transparent_32%),radial-gradient(circle_at_bottom_right,hsl(var(--accent)/0.08),transparent_28%)]" />
-        <div className="mx-auto max-w-6xl px-5 py-12 sm:py-16">
-          <div className="grid gap-8 xl:grid-cols-[1.1fr_0.9fr] xl:items-start">
-            <div>
-              <p className="mono-label text-dust">Geekulcha Train Tourism · Pretoria → Cape Town</p>
-              <h1 className="mt-4 max-w-4xl text-5xl leading-[0.95] sm:text-7xl">
-                South African rail tourism, <span className="text-primary">reimagined like a premium journey system.</span>
-              </h1>
-              <p className="mt-5 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-                Karoo & Coast turns the {fmtKm(TOTAL_KM)} rail corridor into an interactive travel experience. It blends
-                journey intelligence inspired by global railway and airport systems with South African attractions,
-                cultures, stories and place-based discovery.
-              </p>
+      {/* HERO — modernist editorial: image bleeds from the right, type owns the bottom-left */}
+      <section className="relative flex min-h-[82vh] flex-col justify-end overflow-hidden border-b border-primary/20 px-5 py-12 sm:px-10 sm:py-16">
+        <div className="absolute inset-y-0 right-0 w-full sm:w-2/3">
+          <img
+            src={heroTrain}
+            alt="Real landscape photograph from the Cape rail corridor: vineyards and mountain scenery"
+            className="h-full w-full object-cover opacity-45"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-background/10" />
+          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent" />
+        </div>
 
-              <div className="mt-5 flex flex-wrap gap-2 font-mono text-[10px]">
-                {["Journey Intelligence", "WindowCast™", "Station Mode", "Offline-friendly", "GPS-ready"].map(
-                  (label) => (
-                    <span
-                      key={label}
-                      className="rounded-full border border-border bg-card/70 px-2.5 py-1 text-sand backdrop-blur"
-                    >
-                      {label}
-                    </span>
-                  ),
-                )}
-              </div>
+        <div className="relative z-10 mx-auto w-full max-w-6xl">
+          <p className="mono-label text-primary">Geekulcha Train Tourism · Pretoria → Cape Town</p>
+          <h1 className="mt-5 max-w-3xl text-6xl leading-[0.86] italic sm:text-8xl">
+            Karoo
+            <span className="block not-italic text-sand">&amp; Coast</span>
+          </h1>
+          <p className="mt-8 max-w-md text-base leading-relaxed text-foreground/80 sm:text-lg">
+            A curated rail passage from the highveld of Pretoria to the Atlantic shore of Cape Town —
+            {" "}{fmtKm(TOTAL_KM)} of mapped corridor, live journey guidance and place-based storytelling.
+          </p>
 
-              <div className="mt-7 flex flex-wrap gap-3">
-                <Link
-                  to="/journey"
-                  className="rounded-sm bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90"
-                >
-                  Board the train
-                </Link>
-                {!user && (
-                  <Link
-                    to="/auth"
-                    className="rounded-sm border border-border bg-card/50 px-5 py-2.5 text-sm backdrop-blur hover:border-primary"
-                  >
-                    Get your passport
-                  </Link>
-                )}
-                <Link
-                  to="/plan"
-                  className="rounded-sm border border-border bg-card/50 px-5 py-2.5 text-sm backdrop-blur hover:border-primary"
-                >
-                  Plan a trip
-                </Link>
-              </div>
+          <div className="mt-9 flex flex-wrap gap-3">
+            <Link
+              to="/journey"
+              className="bg-primary px-8 py-4 text-xs font-semibold uppercase tracking-[0.16em] text-primary-foreground transition-colors hover:bg-sand"
+            >
+              Board the train
+            </Link>
+            {!user && (
+              <Link
+                to="/auth"
+                className="border border-sand/50 px-8 py-4 text-xs font-semibold uppercase tracking-[0.16em] text-sand transition-colors hover:bg-sand hover:text-background"
+              >
+                Get your passport
+              </Link>
+            )}
+            <Link
+              to="/plan"
+              className="border border-sand/50 px-8 py-4 text-xs font-semibold uppercase tracking-[0.16em] text-sand transition-colors hover:bg-sand hover:text-background"
+            >
+              Plan a trip
+            </Link>
+          </div>
 
-              <div className="mt-10 grid gap-3 sm:grid-cols-4">
-                <MetricTile value={fmtKm(TOTAL_KM)} label="corridor distance" />
-                <MetricTile value={`${stopCount}`} label="station stops" />
-                <MetricTile value={`${passingMoments}`} label="passing moments" />
-                <MetricTile value="5" label="supported languages" />
-              </div>
+          <div className="mt-12 flex flex-wrap gap-2 font-mono text-[10px]">
+            {["Journey Intelligence", "WindowCast™", "Station Mode", "Offline-friendly", "GPS-ready"].map((label) => (
+              <span key={label} className="border border-border px-2.5 py-1 text-sand backdrop-blur">
+                {label}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* JOURNEY BOARD — ivory band, departure-board typography */}
+      <section className="bg-sand text-background">
+        <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 sm:px-10 sm:py-16 md:grid-cols-12">
+          <div className="md:col-span-4">
+            <h2 className="text-4xl leading-none">Journey Board</h2>
+            <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.2em] text-accent">Live route status</p>
+            <p className="mt-6 max-w-xs text-sm leading-relaxed text-background/70">
+              Airport-style awareness for rail — progress, next station, distance remaining and travel mode.
+            </p>
+            <Link
+              to="/journey"
+              className="mt-6 inline-block border-b border-primary pb-1 font-mono text-[11px] uppercase tracking-[0.2em] text-primary"
+            >
+              Open live ride →
+            </Link>
+          </div>
+
+          <div className="space-y-8 md:col-span-8">
+            <BoardRow left="Departure" leftValue="Pretoria Central" right="Status" rightValue="On schedule" divider />
+            <BoardRow left="Next signature stop" leftValue="Kimberley" right="Travel mode" rightValue="Simulated / GPS" divider />
+            <BoardRow left="Destination" leftValue="Cape Town Terminus" right="Corridor distance" rightValue={fmtKm(TOTAL_KM)} />
+
+            <div className="grid gap-px border border-background/10 bg-background/10 sm:grid-cols-4">
+              <BoardTile value={fmtKm(TOTAL_KM)} label="corridor distance" />
+              <BoardTile value={`${stopCount}`} label="station stops" />
+              <BoardTile value={`${passingMoments}`} label="passing moments" />
+              <BoardTile value="5" label="supported languages" />
             </div>
 
-            <div className="grid gap-4">
-              <article className="overflow-hidden rounded-sm border border-border bg-card shadow-[0_14px_40px_rgba(0,0,0,0.18)]">
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <img
-                    src={heroTrain}
-                    alt="Real landscape photograph from the Cape rail journey showing vineyards and mountain scenery"
-                    width={1000}
-                    height={664}
-                    className="h-full w-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/10 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5">
-                    <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-dust">Live corridor preview</p>
-                    <h2 className="mt-2 text-2xl leading-none sm:text-3xl">From Pretoria to the Cape</h2>
-                    <p className="mt-2 max-w-md text-xs leading-relaxed text-muted-foreground sm:text-sm">
-                      Scenic approach, cultural context and railway awareness come together in a single travel companion.
-                    </p>
-                  </div>
-                </div>
-              </article>
-
-              <div className="grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
-                <article className="rounded-sm border border-border bg-card p-5">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <p className="mono-label text-dust">Journey board</p>
-                      <h3 className="mt-2 text-2xl leading-none">Premium travel guidance</h3>
-                    </div>
-                    <span className="rounded-full border border-primary/40 px-2 py-1 font-mono text-[10px] text-primary">
-                      Prototype
-                    </span>
-                  </div>
-
-                  <div className="mt-5 grid gap-3 sm:grid-cols-3">
-                    <DashboardStat label="Current stop" value="Pretoria" />
-                    <DashboardStat label="Next signature stop" value="Kimberley" />
-                    <DashboardStat label="Travel mode" value="Simulated / GPS" />
-                  </div>
-
-                  <div className="mt-5 rounded-sm border border-border bg-background/50 p-4">
-                    <div className="flex items-center justify-between gap-3 font-mono text-[11px] text-dust">
-                      <span>Route progress</span>
-                      <span>MOVE → DISCOVER → EXPERIENCE</span>
-                    </div>
-                    <div className="mt-3 h-1.5 w-full rounded-full bg-muted">
-                      <div className="h-1.5 w-[22%] rounded-full bg-primary" />
-                    </div>
-                    <div className="mt-3 flex flex-wrap gap-2 text-[11px] text-muted-foreground">
-                      {highlightedStops.map((stop) => (
-                        <span key={stop} className="rounded-full border border-border px-2.5 py-1">
-                          {stop}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </article>
-
-                <article className="rounded-sm border border-border bg-card p-5">
-                  <p className="mono-label text-dust">Research lens</p>
-                  <h3 className="mt-2 text-2xl leading-none">Global inspiration, local execution</h3>
-                  <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-                    Inspired by how other countries guide railway passengers and how airports help people navigate complex
-                    journeys — reworked for South African tourism and storytelling.
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-2 font-mono text-[10px]">
-                    {RESEARCH_BADGES.map((item) => (
-                      <span key={item} className="rounded-full border border-border px-2.5 py-1 text-sand">
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </article>
+            <div>
+              <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-background/60">
+                <span>Route progress</span>
+                <span>Move → Discover → Experience</span>
+              </div>
+              <div className="mt-3 h-1 w-full bg-background/15">
+                <div className="h-1 w-[22%] bg-primary" />
+              </div>
+              <div className="mt-3 flex flex-wrap gap-2 font-mono text-[10px] text-background/70">
+                {highlightedStops.map((stop) => (
+                  <span key={stop} className="border border-background/20 px-2.5 py-1">
+                    {stop}
+                  </span>
+                ))}
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-5 py-12">
+      {/* PILLARS — edge-to-edge triptych with colour-fill hover */}
+      <section className="grid grid-cols-1 md:grid-cols-3">
+        {FEATURE_PILLARS.map((item, i) => (
+          <article
+            key={item.title}
+            className={[
+              "group cursor-default border-t border-border p-8 transition-colors duration-500 sm:p-12",
+              i > 0 ? "md:border-l" : "",
+              i === 0 ? "hover:bg-accent" : i === 1 ? "hover:bg-primary" : "hover:bg-sand",
+            ].join(" ")}
+          >
+            <span
+              className={[
+                "block font-mono text-xs uppercase tracking-[0.2em]",
+                i === 1 ? "text-sand" : i === 2 ? "text-accent" : "text-primary",
+                i === 0 ? "group-hover:text-foreground" : "group-hover:text-background",
+              ].join(" ")}
+            >
+              0{i + 1} · {item.kicker}
+            </span>
+            <h3
+              className={[
+                "mt-6 text-4xl leading-none",
+                i === 1 ? "" : "italic",
+                i === 0 ? "group-hover:text-foreground" : "group-hover:text-background",
+              ].join(" ")}
+            >
+              {item.title}
+            </h3>
+            <p
+              className={[
+                "mt-6 text-sm leading-relaxed text-muted-foreground",
+                i === 0 ? "group-hover:text-foreground/90" : "group-hover:text-background/80",
+              ].join(" ")}
+            >
+              {item.body}
+            </p>
+            <div className="mt-12 h-px w-full bg-primary/30 transition-colors group-hover:bg-background/40" />
+          </article>
+        ))}
+      </section>
+
+      <section className="mx-auto max-w-6xl px-5 py-14 sm:px-10">
         <div className="grid gap-5 lg:grid-cols-[1.05fr_1.95fr] lg:items-end">
           <div>
             <p className="mono-label text-dust">Why it stands out</p>
@@ -333,16 +343,19 @@ function Home() {
           </p>
         </div>
 
-        <div className="mt-6 grid gap-4 md:grid-cols-3">
-          {FEATURE_PILLARS.map((item) => (
-            <article key={item.title} className="rounded-sm border border-border bg-card p-5 transition-colors hover:border-primary">
-              <p className="font-mono text-[11px] text-primary">{item.kicker}</p>
-              <h3 className="mt-2 text-2xl leading-none">{item.title}</h3>
-              <p className="mt-3 text-xs leading-relaxed text-muted-foreground">{item.body}</p>
-            </article>
-          ))}
+        <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-border pt-6">
+          <p className="mono-label text-dust">Research lens</p>
+          <div className="flex flex-wrap gap-2 font-mono text-[10px]">
+            {RESEARCH_BADGES.map((item) => (
+              <span key={item} className="border border-border px-2.5 py-1 text-sand">
+                {item}
+              </span>
+            ))}
+          </div>
         </div>
       </section>
+
+
 
       <section className="mx-auto max-w-6xl px-5 pb-12">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
@@ -513,23 +526,42 @@ function Home() {
   );
 }
 
-function MetricTile({ value, label }: { value: string; label: string }) {
+function BoardRow({
+  left,
+  leftValue,
+  right,
+  rightValue,
+  divider,
+}: {
+  left: string;
+  leftValue: string;
+  right: string;
+  rightValue: string;
+  divider?: boolean;
+}) {
   return (
-    <div className="rounded-sm border border-border bg-card/70 p-4 backdrop-blur">
-      <div className="text-2xl text-sand">{value}</div>
-      <div className="mt-1 font-mono text-[11px] text-dust">{label}</div>
+    <div className={`flex items-end justify-between gap-6 ${divider ? "border-b border-background/10 pb-4" : ""}`}>
+      <div>
+        <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-primary">{left}</p>
+        <h3 className="mt-1 text-2xl leading-none">{leftValue}</h3>
+      </div>
+      <div className="text-right">
+        <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-primary">{right}</p>
+        <p className="mt-1 text-sm font-semibold">{rightValue}</p>
+      </div>
     </div>
   );
 }
 
-function DashboardStat({ label, value }: { label: string; value: string }) {
+function BoardTile({ value, label }: { value: string; label: string }) {
   return (
-    <div className="rounded-sm border border-border bg-background/40 p-3">
-      <p className="font-mono text-[10px] text-dust">{label}</p>
-      <p className="mt-1 text-sm text-foreground">{value}</p>
+    <div className="bg-sand p-4">
+      <div className="text-2xl leading-none">{value}</div>
+      <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.16em] text-background/60">{label}</div>
     </div>
   );
 }
+
 
 function MiniMoment({ title, body }: { title: string; body: string }) {
   return (
