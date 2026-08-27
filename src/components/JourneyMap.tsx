@@ -37,7 +37,7 @@ export default function JourneyMap({ km, follow, night, activeId, onSelect }: Pr
 
       L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a> &middot; Cape main line: OSM relation 950176 &middot; Pretoria gateway: station-to-station schematic',
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a> &middot; Cape main line: OSM relation 950176 &middot; Pretoria gateway: station-to-station schematic',
         maxZoom: 16,
       }).addTo(m);
 
