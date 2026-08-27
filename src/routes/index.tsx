@@ -526,23 +526,42 @@ function Home() {
   );
 }
 
-function MetricTile({ value, label }: { value: string; label: string }) {
+function BoardRow({
+  left,
+  leftValue,
+  right,
+  rightValue,
+  divider,
+}: {
+  left: string;
+  leftValue: string;
+  right: string;
+  rightValue: string;
+  divider?: boolean;
+}) {
   return (
-    <div className="rounded-sm border border-border bg-card/70 p-4 backdrop-blur">
-      <div className="text-2xl text-sand">{value}</div>
-      <div className="mt-1 font-mono text-[11px] text-dust">{label}</div>
+    <div className={`flex items-end justify-between gap-6 ${divider ? "border-b border-background/10 pb-4" : ""}`}>
+      <div>
+        <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-primary">{left}</p>
+        <h3 className="mt-1 text-2xl leading-none">{leftValue}</h3>
+      </div>
+      <div className="text-right">
+        <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-primary">{right}</p>
+        <p className="mt-1 text-sm font-semibold">{rightValue}</p>
+      </div>
     </div>
   );
 }
 
-function DashboardStat({ label, value }: { label: string; value: string }) {
+function BoardTile({ value, label }: { value: string; label: string }) {
   return (
-    <div className="rounded-sm border border-border bg-background/40 p-3">
-      <p className="font-mono text-[10px] text-dust">{label}</p>
-      <p className="mt-1 text-sm text-foreground">{value}</p>
+    <div className="bg-sand p-4">
+      <div className="text-2xl leading-none">{value}</div>
+      <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.16em] text-background/60">{label}</div>
     </div>
   );
 }
+
 
 function MiniMoment({ title, body }: { title: string; body: string }) {
   return (
