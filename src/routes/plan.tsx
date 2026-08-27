@@ -13,7 +13,7 @@ export const Route = createFileRoute("/plan")({
       {
         name: "description",
         content:
-          "Choose the stations and storylines that interest you, and Karoo & Coast builds a saved itinerary down the Johannesburg to Cape Town line with distances, arrival times and what to see at each stop.",
+          "Choose the stations and storylines that interest you, and Karoo & Coast builds a saved itinerary down the Pretoria to Cape Town tourism corridor with distances, prototype times and what to discover at each stop.",
       },
       { property: "og:title", content: "Plan a trip — Karoo & Coast" },
       { property: "og:description", content: "Build and save your own rail itinerary along the Cape main line." },
@@ -30,7 +30,7 @@ function Plan() {
   const { user } = useAuth();
   const [title, setTitle] = useState("My Cape main line trip");
   const [notes, setNotes] = useState("");
-  const [picked, setPicked] = useState<string[]>(["johannesburg", "kimberley", "matjiesfontein", "cape-town"]);
+  const [picked, setPicked] = useState<string[]>(["pretoria", "johannesburg", "kimberley", "matjiesfontein", "cape-town"]);
   const [interests, setInterests] = useState<Thread[]>([]);
   const [saved, setSaved] = useState<Trip[]>([]);
   const [status, setStatus] = useState<string | null>(null);
@@ -168,7 +168,7 @@ function Plan() {
                     </div>
                     <p className="mt-1 text-[11px] leading-relaxed text-muted-foreground">{s.lead}</p>
                     <p className="mt-1 font-mono text-[10px] text-dust">
-                      {fmtKm(s.km)} from Park Station
+                      {fmtKm(s.km)} from Pretoria
                       {i > 0 && ` · +${fmtKm(s.km - itinerary[i - 1]!.km)}`}
                     </p>
                   </li>

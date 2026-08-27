@@ -2,7 +2,7 @@ import { STOPS } from "@/data/stops";
 import { TOTAL_KM, clockAtKm, daylightAtKm } from "@/lib/journey";
 import { t, type Lang } from "@/lib/i18n";
 
-/** Horizontal scrubber: the whole 1 546 km with every moment marked. */
+/** Horizontal scrubber for the full Pretoria-to-Cape Town prototype corridor. */
 export default function Timeline({
   km,
   onScrub,

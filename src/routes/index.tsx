@@ -17,42 +17,42 @@ const BIOMES = [
   {
     img: biomeHighveld,
     alt: "Highveld grassland with railway tracks and summer thunderclouds",
-    km: "km 0 · Johannesburg / Pretoria",
+    km: "km 0 · Pretoria / Highveld",
     title: "Highveld grassland",
     body: "Gold-reef country: mine headgear on the horizon, thunderheads building over open veld as the train pulls south.",
   },
   {
     img: biomeGariep,
     alt: "Steel railway bridge over the green Orange River in arid Northern Cape",
-    km: "km 700 · !Gariep",
+    km: "around km 660 · !Gariep",
     title: "The Orange River",
     body: "The line crosses the country's biggest river into the Northern Cape — the water story that made irrigation towns possible.",
   },
   {
     img: biomeKaroo,
     alt: "Great Karoo scrubland at dusk with railway line and violet sky",
-    km: "km 900 · Great Karoo",
+    km: "around km 950 · Great Karoo",
     title: "Great Karoo",
     body: "Hundreds of kilometres of silence, crossed mostly at night under one of the darkest skies on earth.",
   },
   {
     img: biomeFynbos,
     alt: "Cape fynbos with protea flowers, mountains and ocean beyond",
-    km: "km 1 450 · Cape fold belt",
+    km: "around km 1 500 · Cape fold belt",
     title: "Fynbos & the fold mountains",
     body: "Through the Hex River tunnels into the winelands, where protea veld runs down to the coast.",
   },
   {
     img: trainInterior,
     alt: "Wood-panelled corridor of a vintage South African passenger coach",
-    km: "26 hours on board",
+    km: "~27 hours in the prototype",
     title: "Life in the coach",
     body: "Corridors, compartments and window seats — the slow travel that makes the country between the endpoints worth seeing.",
   },
   {
     img: heroTrain,
     alt: "Train on a mountain pass at sunset",
-    km: "km 1 546 · ||Hui !Gaeb",
+    km: "journey end · ||Hui !Gaeb",
     title: "Cape Town arrival",
     body: "Down the pass to Table Bay: the end of the Cape main line and the start of everything the peninsula offers.",
   },
@@ -66,12 +66,12 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Your hub for the Cape main line: ride an animated map of the 1 546 km route, plan a trip, collect station stamps, test yourself on route trivia and share stories in five South African languages.",
+          "A digital rail journey companion for Pretoria to Cape Town: animated mapping, route-aware WindowCast storytelling, station tourism discovery, multilingual content and a digital passport.",
       },
       { property: "og:title", content: "Karoo & Coast — ride, plan, collect, share" },
       {
         property: "og:description",
-        content: "An interactive rail tourism platform for the Pretoria/Johannesburg to Cape Town line.",
+        content: "An interactive rail tourism companion for the Pretoria-to-Cape Town journey corridor.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -85,7 +85,7 @@ const CARDS = [
     to: "/journey",
     kicker: "01",
     title: "Ride the line",
-    body: "An animated train on real rail geometry, with the story of every stop as you pass it. Speak it aloud in five languages.",
+    body: "Journey Intelligence, GPS route matching and WindowCast alerts bring the route to life as landmarks and stories approach.",
   },
   {
     to: "/plan",
@@ -182,13 +182,20 @@ function Home() {
         <div className="mx-auto max-w-6xl px-5 pt-16 pb-12">
         <p className="mono-label text-dust">Geekulcha Train Tourism · Cape main line</p>
 
-        <h1 className="mt-3 max-w-3xl text-5xl leading-[0.95] sm:text-7xl">
-          Ride the <span className="text-primary">1 546 km</span> between Pretoria and Cape Town — and make it yours.
+        <h1 className="mt-3 max-w-4xl text-5xl leading-[0.95] sm:text-7xl">
+          Your train journey becomes <span className="text-primary">part of the destination.</span>
         </h1>
-        <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground">
-          Karoo & Coast turns South Africa's longest passenger line into something you can travel through: an animated
-          map on real rail geometry, the stories of every station, and a passport that fills up as you go.
+        <p className="mt-5 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+          Karoo & Coast is an airport-inspired digital rail companion for the {fmtKm(TOTAL_KM)} Pretoria–Cape Town
+          tourism corridor — combining journey awareness with South African stories, attractions, languages and a
+          route-aware WindowCast experience.
         </p>
+
+        <div className="mt-5 flex flex-wrap gap-2 font-mono text-[10px]">
+          {['Journey Intelligence', 'WindowCast™', 'Station Mode', 'GPS-ready', '5 languages'].map((label) => (
+            <span key={label} className="rounded-full border border-border bg-background/45 px-2.5 py-1 text-sand">{label}</span>
+          ))}
+        </div>
 
         <div className="mt-7 flex flex-wrap gap-3">
           <Link
@@ -220,6 +227,35 @@ function Home() {
             </div>
           ))}
         </dl>
+        </div>
+      </section>
+
+      {/* Product thesis */}
+      <section className="mx-auto max-w-6xl px-5 py-12">
+        <div className="grid gap-5 lg:grid-cols-[1.05fr_1.95fr] lg:items-end">
+          <div>
+            <p className="mono-label text-dust">MOVE → DISCOVER → EXPERIENCE</p>
+            <h2 className="mt-2 text-3xl leading-tight sm:text-4xl">Airport-style journey guidance, built for South African rail tourism.</h2>
+          </div>
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            Inspired by passenger-experience patterns from Japan, Norway, Switzerland, Germany and France, plus
+            airport systems such as Schiphol and Heathrow. We adapt the useful parts — journey awareness, contextual
+            guidance, digital collecting and location-triggered information — around South African places, culture
+            and domestic tourism.
+          </p>
+        </div>
+        <div className="mt-6 grid gap-px overflow-hidden rounded-sm bg-border md:grid-cols-3">
+          {[
+            ['MOVE', 'Know where you are', 'Journey progress, next station, ETA-style guidance and optional GPS route matching.'],
+            ['DISCOVER', 'Know what is around you', 'WindowCast alerts reveal landscapes, heritage and stories at the moment they matter.'],
+            ['EXPERIENCE', 'Turn arrival into tourism', 'Station Mode connects rail stops to attractions, local stories, stamps, quizzes and future partner links.'],
+          ].map(([step, title, body]) => (
+            <article key={step} className="bg-card p-5">
+              <p className="font-mono text-[11px] text-primary">{step}</p>
+              <h3 className="mt-2 text-2xl leading-none">{title}</h3>
+              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{body}</p>
+            </article>
+          ))}
         </div>
       </section>
 

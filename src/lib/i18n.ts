@@ -12,11 +12,11 @@ type Dict = Record<string, string>;
 
 const en: Dict = {
   title: "Karoo & Coast",
-  subtitle: "Pretoria & Johannesburg to Cape Town, in real time",
+  subtitle: "Pretoria to Cape Town · journey companion",
   ride: "Ride the line",
   play: "Depart",
   pause: "Hold",
-  restart: "Back to Park Station",
+  restart: "Back to Pretoria",
   speed: "Speed",
   nowPassing: "Now passing",
   nextUp: "Next",
@@ -48,11 +48,11 @@ const en: Dict = {
 
 const af: Dict = {
   ...en,
-  subtitle: "Pretoria en Johannesburg tot Kaapstad, in reële tyd",
+  subtitle: "Pretoria tot Kaapstad · reisgenoot",
   ride: "Ry die lyn",
   play: "Vertrek",
   pause: "Wag",
-  restart: "Terug na Parkstasie",
+  restart: "Terug na Pretoria",
   speed: "Spoed",
   nowPassing: "Nou verby",
   nextUp: "Volgende",
@@ -84,11 +84,11 @@ const af: Dict = {
 
 const xh: Dict = {
   ...en,
-  subtitle: "Ukusuka ePretoria naseGoli ukuya eKapa, ngexesha lokwenyani",
+  subtitle: "Pretoria ukuya eKapa · iqabane lohambo",
   ride: "Khwela umzila",
   play: "Hamba",
   pause: "Yima",
-  restart: "Buyela ePark Station",
+  restart: "Buyela ePretoria",
   speed: "Isantya",
   nowPassing: "Sidlula",
   nextUp: "Okulandelayo",
@@ -120,11 +120,11 @@ const xh: Dict = {
 
 const zu: Dict = {
   ...en,
-  subtitle: "Kusuka ePitoli naseGoli kuya eKapa, ngesikhathi sangempela",
+  subtitle: "Pretoria kuya eKapa · umngane wohambo",
   ride: "Gibela umzila",
   play: "Hamba",
   pause: "Ima",
-  restart: "Buyela ePark Station",
+  restart: "Buyela ePretoria",
   speed: "Isivinini",
   nowPassing: "Sidlula manje",
   nextUp: "Okulandelayo",
@@ -156,11 +156,11 @@ const zu: Dict = {
 
 const st: Dict = {
   ...en,
-  subtitle: "Ho tloha Pretoria le Johannesburg ho ya Cape Town, ka nako ya sebele",
+  subtitle: "Pretoria ho ya Cape Town · motswalle wa leeto",
   ride: "Palama terene",
   play: "Tsamaya",
   pause: "Ema",
-  restart: "Khutlela Park Station",
+  restart: "Khutlela Pretoria",
   speed: "Lebelo",
   nowPassing: "Re feta",
   nextUp: "E latelang",

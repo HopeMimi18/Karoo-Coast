@@ -1,20 +1,20 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { LEGS, STOPS } from "@/data/stops";
-import { clockAtKm, fmtKm } from "@/lib/journey";
+import { TOTAL_KM, clockAtKm, fmtKm } from "@/lib/journey";
 
 export const Route = createFileRoute("/guide")({
   head: () => ({
     meta: [
-      { title: "Route guide — every stop from Johannesburg to Cape Town" },
+      { title: "Route guide — every stop from Pretoria to Cape Town" },
       {
         name: "description",
         content:
-          "The full Cape main line stop by stop: five legs, 28 moments, distances, arrival times and what to look for out of the window.",
+          "The Pretoria-to-Cape Town journey stop by stop: five legs, route moments, prototype times and what to look for out of the window.",
       },
       { property: "og:title", content: "Route guide — the Cape main line" },
       {
         property: "og:description",
-        content: "Five legs, 1 546 km, every stop and passing moment with distances and times.",
+        content: "Five legs from Pretoria to Cape Town, with every stop and passing moment, distances and prototype journey times.",
       },
       { property: "og:type", content: "article" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -31,7 +31,7 @@ function Guide() {
       </Link>
       <h1 className="mt-6 text-5xl leading-none">Route guide</h1>
       <p className="mt-3 max-w-xl text-muted-foreground">
-        Johannesburg Park Station to Cape Town: 1 546 km of 1 067 mm gauge, roughly 26 hours, five legs.
+        Pretoria to Cape Town: {fmtKm(TOTAL_KM)} in this prototype corridor, five legs, with a schematic Pretoria gateway before the detailed Cape main-line geometry.
       </p>
 
       <div className="mt-12 space-y-14">
