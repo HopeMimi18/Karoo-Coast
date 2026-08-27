@@ -1,3 +1,5 @@
+import { GATEWAY_KM } from "@/data/route";
+
 export type Thread = "diamond" | "name" | "water" | "conflict";
 
 export type Stop = {
@@ -10,7 +12,7 @@ export type Stop = {
   leg: number;
   lat: number;
   lon: number;
-  /** Distance from Johannesburg Park Station along the rail line. */
+  /** Distance from Pretoria Station along the journey corridor. */
   km: number;
   kind: "stop" | "passing";
   /** 0-3 — how much of the journey this moment carries. */
@@ -28,14 +30,14 @@ export type Stop = {
 };
 
 export const LEGS = [
-  { n: 1, title: "The Highveld", sub: "Johannesburg → Warrenton", note: "Grassland, maize, mine dumps. 1 700 m above the sea." },
+  { n: 1, title: "The Highveld", sub: "Pretoria → Warrenton", note: "Capital-city departure, Gauteng rail gateway, grassland, maize and mine country." },
   { n: 2, title: "Diamond Country", sub: "Kimberley → De Aar", note: "The land dries out. The densest history on the line." },
   { n: 3, title: "The Great Karoo", sub: "Merriman → Laingsburg", note: "400 km of semi-desert, most of it crossed in the dark." },
   { n: 4, title: "Over the Mountain", sub: "Matjiesfontein → Worcester", note: "The descent that set the gauge for a continent." },
   { n: 5, title: "The Winelands and Home", sub: "Wellington → Cape Town", note: "The last 120 km. Mountains, vineyards, then the city." },
 ];
 
-export const STOPS: Stop[] = [
+const BASE_STOPS: Stop[] = [
   {
     id: "johannesburg",
     name: "Johannesburg Park Station",
@@ -580,7 +582,7 @@ export const STOPS: Stop[] = [
     lead_af: "Dit verskyn regs. Jy reis al meer as 'n dag.",
     lead_xh: "Ivela ngasekunene. Sele uhambe ngaphezu kosuku.",
     body:
-      "The Khoekhoen called it Hoerikwaggo, the mountain in the sea. It is the oldest continuously named landmark on this route, older than every station on the line by a margin that makes the railway look brand new. Twenty-six hours, 1 546 kilometres, five provinces of the interior — and then the flat top of the mountain over the Cape Flats.",
+      "The Khoekhoen called it Hoerikwaggo, the mountain in the sea. It is the oldest continuously named landmark on this route, older than every station on the line by a margin that makes the railway look brand new. After the long Highveld, Karoo and mountain crossing, the flat top finally rises over the Cape Flats.",
     scene: "Right-hand side. Devil's Peak first, then the table.",
     facts: [["~600 M yrs", "of sandstone"]],
     source: { label: "Table Mountain", url: "https://en.wikipedia.org/wiki/Table_Mountain" },
@@ -603,9 +605,55 @@ export const STOPS: Stop[] = [
     lead_xh: "Isiphelo esisemazantsi somzila owawuthwala yonke into.",
     body:
       "Opened in 1863, rebuilt in 1961, twenty-four platforms on Adderley Street. This is the end of a line that carried diamonds down and machinery up, soldiers to two wars, prisoners to an island, migrant labour in both directions for a century, and — every day, quietly — ordinary people going somewhere. The Khoekhoen name for this place, ||Hui !Gaeb, means where clouds gather. You have crossed the country at the speed the country was actually built.",
-    facts: [["1863", "opened"], ["24", "platforms"], ["1 546 km", "behind you"]],
+    facts: [["1863", "opened"], ["24", "platforms"], ["Cape Town", "journey complete"]],
     source: { label: "Cape Town railway station", url: "https://en.wikipedia.org/wiki/Cape_Town_railway_station" },
   },
+];
+
+
+const PRETORIA_STOP: Stop = {
+  id: "pretoria",
+  name: "Pretoria Station",
+  native: "Tshwane",
+  nativeMeaning: "The metropolitan name honours the historic Tshwane name associated with the Apies River area.",
+  province: "Gauteng",
+  leg: 1,
+  lat: -25.75956,
+  lon: 28.19045,
+  km: 0,
+  kind: "stop",
+  weight: 3,
+  threads: ["name"],
+  lead: "The capital-city gateway to a journey across South Africa.",
+  lead_af: "Die hoofstadspoort na 'n reis deur Suid-Afrika.",
+  lead_xh: "Isango lekomkhulu lohambo olunqumla uMzantsi Afrika.",
+  body:
+    "Pretoria Station opened in 1892 and the current Herbert Baker-designed building dates from 1910. For Karoo & Coast, this is km 0: the tourism journey begins in the capital before joining the Cape main-line story at Johannesburg Park Station. The prototype maps the Pretoria-to-Park gateway station-to-station and then follows detailed Cape main-line geometry south to Cape Town.",
+  scene: "Herbert Baker's station building and the Salvokop railway landscape as the journey begins.",
+  facts: [["1892", "first station"], ["1910", "current building"], ["km 0", "journey begins"]],
+  source: { label: "Pretoria railway station", url: "https://en.wikipedia.org/wiki/Pretoria_railway_station" },
+};
+
+/**
+ * Public journey moments measured from Pretoria. The original Cape main-line
+ * dataset is measured from Johannesburg Park Station, so it is shifted by the
+ * gateway distance while preserving the underlying researched content.
+ */
+export const STOPS: Stop[] = [
+  PRETORIA_STOP,
+  ...BASE_STOPS.map((stop) => ({
+    ...stop,
+    km: stop.km + GATEWAY_KM,
+    ...(stop.id === "johannesburg"
+      ? {
+          lead: "Gateway to the Cape main line.",
+          body:
+            "Park Station opened in 1897 and was rebuilt in 1946 to a Gordon Leith design. It is South Africa's major passenger-rail hub and the point where this prototype's Pretoria gateway hands over to the detailed Cape main-line geometry. From here the journey turns southwest across the Witwatersrand and into the long-distance tourism story toward Cape Town.",
+          scene: "The platform, then mine dumps on the horizon as the route turns southwest.",
+          facts: [["1897", "station opened"], ["1946", "rebuilt, Gordon Leith"], ["gateway", "Cape main line"]] as [string, string][],
+        }
+      : {}),
+  })),
 ];
 
 export const THREADS: { id: Thread; label: string; blurb: string; color: string }[] = [
@@ -639,4 +687,4 @@ export const THREADS: { id: Thread; label: string; blurb: string; color: string 
   },
 ];
 
-export const TOTAL_HOURS = 26;
+export const TOTAL_HOURS = 27;

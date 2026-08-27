@@ -42,13 +42,18 @@ export function nextStop(km: number): Stop | undefined {
   return STOPS.find((s) => s.km > km + 6);
 }
 
+/** The next actual station, ignoring passing moments. */
+export function nextStation(km: number): Stop | undefined {
+  return STOPS.find((s) => s.kind === "stop" && s.km > km + 6);
+}
+
 /** Everything already seen, newest first. */
 export function passed(km: number): Stop[] {
   return STOPS.filter((s) => s.km <= km + 6).reverse();
 }
 
-export const DEPART_MINUTES = 12 * 60 + 30; // 12:30 out of Park Station
-export const JOURNEY_MINUTES = 26 * 60;
+export const DEPART_MINUTES = 11 * 60 + 30; // 11:30 prototype departure from Pretoria
+export const JOURNEY_MINUTES = 27 * 60; // Pretoria gateway + ~26 h Cape main-line journey
 
 /** Elapsed journey minutes at a kilometre mark (linear approximation). */
 export function minutesAtKm(km: number): number {
@@ -84,7 +89,40 @@ export function elapsedLabel(km: number): string {
 }
 
 export function fmtKm(km: number): string {
-  return `${Math.round(km).toLocaleString("en-ZA")} km`;
+  return `${Math.round(km).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")} km`;
+}
+
+
+function haversineKm(a: LatLon, b: LatLon): number {
+  const R = 6371;
+  const toRad = (v: number) => (v * Math.PI) / 180;
+  const dLat = toRad(b[0] - a[0]);
+  const dLon = toRad(b[1] - a[1]);
+  const lat1 = toRad(a[0]);
+  const lat2 = toRad(b[0]);
+  const h =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(h));
+}
+
+/**
+ * Finds the nearest sampled route point to a device location. This is sufficient
+ * for the prototype GPS mode; production should snap to line segments and use
+ * authoritative live operational data where available.
+ */
+export function nearestRouteMatch(lat: number, lon: number): { km: number; distanceKm: number } {
+  const here: LatLon = [lat, lon];
+  let bestIndex = 0;
+  let bestDistance = Number.POSITIVE_INFINITY;
+  for (let i = 0; i < ROUTE.length; i++) {
+    const d = haversineKm(here, ROUTE[i]!);
+    if (d < bestDistance) {
+      bestDistance = d;
+      bestIndex = i;
+    }
+  }
+  return { km: ROUTE_KM[bestIndex] ?? 0, distanceKm: bestDistance };
 }
 
 export { TOTAL_KM };

@@ -5,6 +5,7 @@ import { STOPS, THREADS, type Stop, type Thread } from "@/data/stops";
 import { LANGS, t, type Lang } from "@/lib/i18n";
 import {
   TOTAL_KM,
+  JOURNEY_MINUTES,
   clockAtKm,
   currentStop,
   dayAtKm,
@@ -12,10 +13,16 @@ import {
   elapsedLabel,
   fmtKm,
   nextStop,
+  nextStation,
+  nearestRouteMatch,
   passed,
 } from "@/lib/journey";
 import StoryPanel from "@/components/StoryPanel";
 import Timeline from "@/components/Timeline";
+import JourneyStatus from "@/components/JourneyStatus";
+import WindowCast from "@/components/WindowCast";
+import StationMode from "@/components/StationMode";
+import { nextWindowCast, stationIntelligence } from "@/data/experience";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -28,7 +35,7 @@ export const Route = createFileRoute("/journey")({
       {
         name: "description",
         content:
-          "Ride the 1 546 km Cape main line in real time: real rail geometry, 28 stops and passing moments, five languages, and a passport stamp at every station you reach.",
+          "Explore the Pretoria-to-Cape Town rail tourism corridor with Journey Intelligence, WindowCast location storytelling, GPS route matching, station discovery and a digital passport.",
       },
       { property: "og:title", content: "Live ride — Karoo & Coast" },
       {
@@ -60,6 +67,9 @@ function Journey() {
   const [speaking, setSpeaking] = useState(false);
   const [started, setStarted] = useState(false);
   const [stamps, setStamps] = useState<string[]>([]);
+  const [journeyMode, setJourneyMode] = useState<"demo" | "gps">("demo");
+  const [gpsStatus, setGpsStatus] = useState<string | null>(null);
+  const gpsWatch = useRef<number | null>(null);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -74,7 +84,7 @@ function Journey() {
       .then(({ data }) => setStamps((data ?? []).map((r) => r.stop_id as string)));
   }, [user]);
 
-  // Journey clock: 1 546 km over 26 hours, scaled by speed.
+  // Prototype journey clock: Pretoria gateway + Cape main line, scaled by speed.
   const raf = useRef<number | null>(null);
   const last = useRef<number>(0);
   useEffect(() => {
@@ -84,7 +94,7 @@ function Journey() {
       const dt = (now - last.current) / 1000;
       last.current = now;
       setKm((prev) => {
-        const kmPerSec = (TOTAL_KM / (26 * 3600)) * speed;
+        const kmPerSec = (TOTAL_KM / (JOURNEY_MINUTES * 60)) * speed;
         const next = prev + kmPerSec * dt;
         if (next >= TOTAL_KM) {
           setPlaying(false);
@@ -103,6 +113,9 @@ function Journey() {
   const auto = currentStop(km);
   const active = manual ?? auto;
   const upcoming = nextStop(km);
+  const upcomingStation = nextStation(km);
+  const windowMoment = nextWindowCast(km);
+  const stationData = active.kind === "stop" ? stationIntelligence(active.id) : undefined;
   const light = daylightAtKm(km);
   const night = light < 0.4;
 
@@ -150,13 +163,67 @@ function Journey() {
     setSpeaking(true);
   }, [active, lang]);
 
-  useEffect(() => {
-    return () => {
-      if (typeof window !== "undefined" && "speechSynthesis" in window) window.speechSynthesis.cancel();
-    };
+  const stopGpsWatch = useCallback(() => {
+    if (typeof navigator !== "undefined" && "geolocation" in navigator && gpsWatch.current !== null) {
+      navigator.geolocation.clearWatch(gpsWatch.current);
+      gpsWatch.current = null;
+    }
   }, []);
 
+  const useDemoMode = useCallback(() => {
+    stopGpsWatch();
+    setJourneyMode("demo");
+    setGpsStatus(null);
+  }, [stopGpsWatch]);
+
+  const useGpsMode = useCallback(() => {
+    if (typeof navigator === "undefined" || !("geolocation" in navigator)) {
+      setGpsStatus("GPS is not available in this browser. Use Explore demo instead.");
+      return;
+    }
+    stopGpsWatch();
+    setPlaying(false);
+    setJourneyMode("gps");
+    setGpsStatus("Locating you on the Pretoria–Cape Town corridor…");
+
+    const onPosition = (position: GeolocationPosition) => {
+      const match = nearestRouteMatch(position.coords.latitude, position.coords.longitude);
+      if (match.distanceKm > 20) {
+        setGpsStatus(
+          `Your device is about ${Math.round(match.distanceKm)} km from the mapped rail corridor. GPS mode will keep watching; use Explore demo if you are not currently on the route.`,
+        );
+        return;
+      }
+      setKm(match.km);
+      setManual(null);
+      setStarted(true);
+      setFollow(true);
+      setGpsStatus(`Route matched within ${match.distanceKm.toFixed(1)} km · updating from your device location.`);
+    };
+
+    const onError = (error: GeolocationPositionError) => {
+      const message = error.code === 1
+        ? "Location permission was denied. Enable location access or use Explore demo."
+        : "We could not get a reliable location fix. GPS mode can be retried when signal improves.";
+      setGpsStatus(message);
+    };
+
+    gpsWatch.current = navigator.geolocation.watchPosition(onPosition, onError, {
+      enableHighAccuracy: true,
+      maximumAge: 15000,
+      timeout: 20000,
+    });
+  }, [stopGpsWatch]);
+
+  useEffect(() => {
+    return () => {
+      stopGpsWatch();
+      if (typeof window !== "undefined" && "speechSynthesis" in window) window.speechSynthesis.cancel();
+    };
+  }, [stopGpsWatch]);
+
   const depart = () => {
+    useDemoMode();
     setStarted(true);
     setPlaying(true);
   };
@@ -176,7 +243,7 @@ function Journey() {
               activeId={active.id}
               onSelect={(s) => {
                 setManual(s);
-                setKm(s.km);
+                if (journeyMode === "demo") setKm(s.km);
               }}
             />
           </Suspense>
@@ -247,10 +314,50 @@ function Journey() {
         </div>
       </header>
 
+      {windowMoment && (
+        <div className="absolute bottom-[10rem] left-5 z-[1150] hidden sm:block">
+          <WindowCast
+            km={km}
+            cast={windowMoment.cast}
+            stop={windowMoment.stop}
+            onOpen={() => {
+              setManual(windowMoment.stop);
+              if (journeyMode === "demo") setKm(windowMoment.stop.km);
+            }}
+          />
+        </div>
+      )}
+
       {/* Story rail */}
       <section className="absolute inset-x-0 bottom-[8.5rem] top-auto z-[1100] max-h-[52dvh] overflow-y-auto px-4 sm:inset-y-0 sm:left-auto sm:right-0 sm:max-h-none sm:w-[27rem] sm:px-0">
         <div className="h-full border border-border bg-card/92 p-5 backdrop-blur-md sm:border-y-0 sm:border-r-0 sm:overflow-y-auto sm:pt-28 sm:pb-44">
-          <StoryPanel stop={active} lang={lang} speaking={speaking} onSpeak={speak} />
+          {windowMoment && (
+            <div className="mb-4 sm:hidden">
+              <WindowCast
+                km={km}
+                cast={windowMoment.cast}
+                stop={windowMoment.stop}
+                onOpen={() => {
+                  setManual(windowMoment.stop);
+                  if (journeyMode === "demo") setKm(windowMoment.stop.km);
+                }}
+              />
+            </div>
+          )}
+
+          <JourneyStatus
+            km={km}
+            active={auto}
+            nextStation={upcomingStation}
+            mode={journeyMode}
+            gpsStatus={gpsStatus}
+            onDemo={useDemoMode}
+            onGps={useGpsMode}
+          />
+
+          <div className="mt-6">
+            <StoryPanel stop={active} lang={lang} speaking={speaking} onSpeak={speak} />
+          </div>
 
           <div className="mt-4 flex flex-wrap items-center gap-2">
             {user ? (
@@ -278,6 +385,8 @@ function Journey() {
             </Link>
           </div>
 
+          {stationData && <StationMode station={stationData} />}
+
           {upcoming && (
             <p className="mt-6 hairline pt-4 font-mono text-[11px] text-muted-foreground">
               {t(lang, "nextUp")}: <span className="text-sand">{upcoming.name}</span> ·{" "}
@@ -293,7 +402,7 @@ function Journey() {
                   <button
                     onClick={() => {
                       setManual(s);
-                      setKm(s.km);
+                      if (journeyMode === "demo") setKm(s.km);
                     }}
                     className={`flex w-full items-baseline justify-between gap-2 py-0.5 text-left text-xs hover:text-primary ${
                       s.id === active.id ? "text-primary" : "text-muted-foreground"
@@ -314,17 +423,22 @@ function Journey() {
 
       {/* Controls */}
       <footer className="absolute inset-x-0 bottom-0 z-[1300] border-t border-border bg-card/90 px-4 py-3 backdrop-blur-md sm:pr-[28rem]">
-        <Timeline km={km} onScrub={(v) => { setKm(v); setManual(null); }} activeId={active.id} lang={lang} />
+        <Timeline km={km} onScrub={(v) => { useDemoMode(); setKm(v); setManual(null); }} activeId={active.id} lang={lang} />
 
         <div className="mt-2 flex flex-wrap items-center gap-3">
           <button
-            onClick={() => (playing ? setPlaying(false) : depart())}
+            onClick={() => {
+              if (journeyMode === "gps") depart();
+              else if (playing) setPlaying(false);
+              else depart();
+            }}
             className="rounded-sm bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
           >
-            {playing ? t(lang, "pause") : started ? t(lang, "ride") : t(lang, "play")}
+            {journeyMode === "gps" ? "Explore demo" : playing ? t(lang, "pause") : started ? t(lang, "ride") : t(lang, "play")}
           </button>
           <button
             onClick={() => {
+              useDemoMode();
               setKm(0);
               setManual(null);
               setPlaying(false);

@@ -78,14 +78,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Karoo & Coast — the Cape main line, mapped and animated" },
-      { name: "description", content: "An interactive, multilingual journey along the Pretoria/Johannesburg to Cape Town railway." },
+      { title: "Karoo & Coast — Pretoria to Cape Town rail tourism companion" },
+      { name: "description", content: "An interactive, multilingual Pretoria-to-Cape Town rail tourism companion with Journey Intelligence and WindowCast storytelling." },
       { name: "author", content: "Karoo & Coast" },
       { property: "og:title", content: "Karoo & Coast" },
-      { property: "og:description", content: "Ride the 1 546 km Cape main line in real time." },
+      { property: "og:description", content: "Turn the Pretoria-to-Cape Town train journey into a destination with route-aware stories and tourism discovery." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "theme-color", content: "#132c2d" },
     ],
     links: [
       {
@@ -93,6 +93,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: appCss,
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "manifest", href: "/manifest.webmanifest" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
@@ -123,6 +124,13 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  useEffect(() => {
+    if (typeof navigator === "undefined" || !("serviceWorker" in navigator)) return;
+    void navigator.serviceWorker.register("/sw.js").catch(() => {
+      // Offline support is progressive enhancement; the app remains usable without it.
+    });
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>

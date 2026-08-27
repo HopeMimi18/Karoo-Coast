@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { STOPS, THREADS } from "@/data/stops";
-import { fmtKm } from "@/lib/journey";
+import { TOTAL_KM, fmtKm } from "@/lib/journey";
 
 export const Route = createFileRoute("/threads")({
   head: () => ({
@@ -31,8 +31,7 @@ function Threads() {
       </Link>
       <h1 className="mt-6 text-5xl leading-none">Four threads</h1>
       <p className="mt-3 max-w-xl text-muted-foreground">
-        A railway is not a list of stations. These four stories run the whole 1 546 km, and every stop on the
-        line belongs to at least one of them.
+        A railway is not a list of stations. These four stories run across the {fmtKm(TOTAL_KM)} prototype journey corridor, and every stop on the line belongs to at least one of them.
       </p>
 
       <div className="mt-12 space-y-12">

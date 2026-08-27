@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import type { Map as LeafletMap, Marker, Polyline, CircleMarker } from "leaflet";
-import { ROUTE, ROUTE_KM } from "@/data/route";
+import { GATEWAY_POINT_COUNT, PRETORIA_GATEWAY_ROUTE, ROUTE, ROUTE_KM } from "@/data/route";
 import { STOPS, type Stop } from "@/data/stops";
 import { positionAtKm } from "@/lib/journey";
 
@@ -35,13 +35,21 @@ export default function JourneyMap({ km, follow, night, activeId, onSelect }: Pr
       }).setView([-30.2, 23.6], 6);
       map.current = m;
 
-      L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png", {
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a> &middot; rail geometry: OSM relation 950176',
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a> &middot; Cape main line: OSM relation 950176 &middot; Pretoria gateway: station-to-station schematic',
         maxZoom: 16,
       }).addTo(m);
 
-      L.polyline(ROUTE, { color: "#8a8078", weight: 2.5, opacity: 0.55 }).addTo(m);
+      // Pretoria gateway is deliberately shown as a schematic station-to-station
+      // connection; the detailed Cape main-line geometry starts at Park Station.
+      L.polyline(PRETORIA_GATEWAY_ROUTE, {
+        color: "#8a8078",
+        weight: 2.5,
+        opacity: 0.75,
+        dashArray: "7 7",
+      }).addTo(m);
+      L.polyline(ROUTE.slice(GATEWAY_POINT_COUNT - 1), { color: "#8a8078", weight: 2.5, opacity: 0.55 }).addTo(m);
       travelled.current = L.polyline([ROUTE[0]!], {
         color: "#e0813f",
         weight: 4,
@@ -114,5 +122,5 @@ export default function JourneyMap({ km, follow, night, activeId, onSelect }: Pr
     holder.current?.classList.toggle("night", night);
   }, [night]);
 
-  return <div ref={holder} className="h-full w-full" aria-label="Map of the Cape main line" />;
+  return <div ref={holder} className="h-full w-full" aria-label="Map of the Pretoria to Cape Town rail tourism journey" />;
 }
