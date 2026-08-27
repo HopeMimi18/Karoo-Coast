@@ -74,86 +74,91 @@
 
 :root {
   --radius: 0.25rem;
-  /* Fynbos Ink — day leg: deep pine-teal ground, protea magenta, aloe green. */
-  --background: oklch(0.165 0.028 195);
-  --foreground: oklch(0.95 0.015 180);
-  --card: oklch(0.205 0.032 195);
-  --card-foreground: oklch(0.95 0.015 180);
-  --popover: oklch(0.195 0.032 195);
-  --popover-foreground: oklch(0.95 0.015 180);
-  --primary: oklch(0.7 0.175 348);
-  --primary-foreground: oklch(0.15 0.03 195);
-  --secondary: oklch(0.26 0.035 195);
-  --secondary-foreground: oklch(0.95 0.015 180);
-  --muted: oklch(0.245 0.03 195);
-  --muted-foreground: oklch(0.72 0.03 185);
-  --accent: oklch(0.29 0.045 195);
-  --accent-foreground: oklch(0.96 0.015 180);
-  --destructive: oklch(0.6 0.19 20);
-  --destructive-foreground: oklch(0.97 0.01 180);
-  --border: oklch(0.95 0.02 180 / 13%);
-  --input: oklch(0.95 0.02 180 / 17%);
-  --ring: oklch(0.7 0.175 348);
-  --rail: oklch(0.82 0.16 148);
-  --ember: oklch(0.75 0.16 340);
-  --sand: oklch(0.91 0.045 168);
-  --dust: oklch(0.58 0.035 190);
-  --thread-diamond: oklch(0.88 0.09 205);
-  --thread-name: oklch(0.83 0.16 128);
-  --thread-water: oklch(0.78 0.13 215);
-  --thread-conflict: oklch(0.7 0.19 352);
-  --chart-1: oklch(0.7 0.175 348);
-  --chart-2: oklch(0.83 0.16 128);
-  --chart-3: oklch(0.78 0.13 215);
-  --chart-4: oklch(0.88 0.09 205);
-  --chart-5: oklch(0.8 0.15 85);
-  --sidebar: oklch(0.195 0.032 195);
-  --sidebar-foreground: oklch(0.95 0.015 180);
-  --sidebar-primary: oklch(0.7 0.175 348);
-  --sidebar-primary-foreground: oklch(0.15 0.03 195);
-  --sidebar-accent: oklch(0.26 0.035 195);
-  --sidebar-accent-foreground: oklch(0.95 0.015 180);
-  --sidebar-border: oklch(0.95 0.02 180 / 13%);
-  --sidebar-ring: oklch(0.7 0.175 348);
+  /* Cape Explorer — midnight navy, warm sand, copper, Atlantic teal and ivory. */
+  --background: oklch(0.2342 0.0467 250.5); /* Midnight Navy #0B1F33 */
+  --foreground: oklch(0.9588 0.0127 86.8); /* Ivory #F5F1E8 */
+  --card: oklch(0.2688 0.0454 246.6); /* Deep navy surface #12283B */
+  --card-foreground: oklch(0.9588 0.0127 86.8);
+  --popover: oklch(0.2688 0.0454 246.6);
+  --popover-foreground: oklch(0.9588 0.0127 86.8);
+  --primary: oklch(0.6289 0.1266 49.1); /* Copper #C56F3D */
+  --primary-foreground: oklch(0.2342 0.0467 250.5);
+  --secondary: oklch(0.3589 0.043 221.8); /* Navy-teal bridge #21424D */
+  --secondary-foreground: oklch(0.9588 0.0127 86.8);
+  --muted: oklch(0.3098 0.049 242.6); /* Muted navy #183347 */
+  --muted-foreground: oklch(0.7285 0.0236 80.7); /* Warm stone #AFA697 */
+  --accent: oklch(0.504 0.0671 199.3); /* Atlantic Teal #2D7073 */
+  --accent-foreground: oklch(0.9588 0.0127 86.8);
+  --destructive: oklch(0.5137 0.1079 40.2); /* Muted rust #9A4F34 */
+  --destructive-foreground: oklch(0.9588 0.0127 86.8);
+  --border: oklch(0.8858 0.0367 78.1 / 18%); /* Warm Sand */
+  --input: oklch(0.8858 0.0367 78.1 / 23%);
+  --ring: oklch(0.6289 0.1266 49.1);
+  --rail: oklch(0.504 0.0671 199.3); /* Atlantic Teal */
+  --ember: oklch(0.6289 0.1266 49.1); /* Copper */
+  --sand: oklch(0.8858 0.0367 78.1); /* Warm Sand #E7D7BF */
+  --dust: oklch(0.7285 0.0236 80.7);
+  --thread-diamond: oklch(0.8858 0.0367 78.1);
+  --thread-name: oklch(0.6289 0.1266 49.1);
+  --thread-water: oklch(0.5487 0.0728 200.1);
+  --thread-conflict: oklch(0.5137 0.1079 40.2);
+  --chart-1: oklch(0.6289 0.1266 49.1);
+  --chart-2: oklch(0.504 0.0671 199.3);
+  --chart-3: oklch(0.8858 0.0367 78.1);
+  --chart-4: oklch(0.5487 0.0728 200.1);
+  --chart-5: oklch(0.7285 0.0236 80.7);
+  --sidebar: oklch(0.2688 0.0454 246.6);
+  --sidebar-foreground: oklch(0.9588 0.0127 86.8);
+  --sidebar-primary: oklch(0.6289 0.1266 49.1);
+  --sidebar-primary-foreground: oklch(0.2342 0.0467 250.5);
+  --sidebar-accent: oklch(0.3589 0.043 221.8);
+  --sidebar-accent-foreground: oklch(0.9588 0.0127 86.8);
+  --sidebar-border: oklch(0.8858 0.0367 78.1 / 18%);
+  --sidebar-ring: oklch(0.6289 0.1266 49.1);
 }
 
 .dark {
-  /* Karoo cosmos — night leg: ink violet sky, turquoise rail light. */
-  --background: oklch(0.115 0.035 292);
-  --foreground: oklch(0.93 0.02 275);
-  --card: oklch(0.155 0.04 292);
-  --card-foreground: oklch(0.93 0.02 275);
-  --popover: oklch(0.15 0.04 292);
-  --popover-foreground: oklch(0.93 0.02 275);
-  --primary: oklch(0.8 0.14 192);
-  --primary-foreground: oklch(0.12 0.035 292);
-  --secondary: oklch(0.22 0.045 292);
-  --secondary-foreground: oklch(0.93 0.02 275);
-  --muted: oklch(0.205 0.04 292);
-  --muted-foreground: oklch(0.7 0.035 285);
-  --accent: oklch(0.26 0.055 292);
-  --accent-foreground: oklch(0.95 0.02 275);
-  --destructive: oklch(0.62 0.18 20);
-  --destructive-foreground: oklch(0.97 0.01 275);
-  --border: oklch(0.9 0.03 280 / 13%);
-  --input: oklch(0.9 0.03 280 / 17%);
-  --ring: oklch(0.8 0.14 192);
-  --rail: oklch(0.78 0.15 320);
-  --ember: oklch(0.82 0.13 192);
-  --sand: oklch(0.9 0.04 280);
-  --dust: oklch(0.52 0.04 288);
-  --thread-diamond: oklch(0.9 0.08 205);
-  --thread-name: oklch(0.82 0.14 135);
-  --thread-water: oklch(0.8 0.13 210);
-  --thread-conflict: oklch(0.74 0.17 350);
-  --sidebar: oklch(0.155 0.04 292);
-  --sidebar-foreground: oklch(0.93 0.02 275);
-  --sidebar-primary: oklch(0.8 0.14 192);
-  --sidebar-primary-foreground: oklch(0.12 0.035 292);
-  --sidebar-accent: oklch(0.22 0.045 292);
-  --sidebar-accent-foreground: oklch(0.93 0.02 275);
-  --sidebar-border: oklch(0.9 0.03 280 / 13%);
-  --sidebar-ring: oklch(0.8 0.14 192);
+  /* Cape Explorer night leg — same identity, deeper navy and brighter wayfinding accents. */
+  --background: oklch(0.1963 0.0363 251.4); /* Deep Midnight #081625 */
+  --foreground: oklch(0.9588 0.0127 86.8);
+  --card: oklch(0.2156 0.0224 240.7); /* Charcoal Navy #101B23 */
+  --card-foreground: oklch(0.9588 0.0127 86.8);
+  --popover: oklch(0.2156 0.0224 240.7);
+  --popover-foreground: oklch(0.9588 0.0127 86.8);
+  --primary: oklch(0.6684 0.1307 49.1); /* Brighter copper #D47A46 */
+  --primary-foreground: oklch(0.1963 0.0363 251.4);
+  --secondary: oklch(0.3098 0.049 242.6);
+  --secondary-foreground: oklch(0.9588 0.0127 86.8);
+  --muted: oklch(0.2688 0.0454 246.6);
+  --muted-foreground: oklch(0.7285 0.0236 80.7);
+  --accent: oklch(0.5487 0.0728 200.1); /* Brighter Atlantic Teal #347E82 */
+  --accent-foreground: oklch(0.9588 0.0127 86.8);
+  --destructive: oklch(0.5137 0.1079 40.2);
+  --destructive-foreground: oklch(0.9588 0.0127 86.8);
+  --border: oklch(0.8858 0.0367 78.1 / 16%);
+  --input: oklch(0.8858 0.0367 78.1 / 20%);
+  --ring: oklch(0.6684 0.1307 49.1);
+  --rail: oklch(0.5487 0.0728 200.1);
+  --ember: oklch(0.6684 0.1307 49.1);
+  --sand: oklch(0.8858 0.0367 78.1);
+  --dust: oklch(0.7285 0.0236 80.7);
+  --thread-diamond: oklch(0.8858 0.0367 78.1);
+  --thread-name: oklch(0.6684 0.1307 49.1);
+  --thread-water: oklch(0.5487 0.0728 200.1);
+  --thread-conflict: oklch(0.5137 0.1079 40.2);
+  --chart-1: oklch(0.6684 0.1307 49.1);
+  --chart-2: oklch(0.5487 0.0728 200.1);
+  --chart-3: oklch(0.8858 0.0367 78.1);
+  --chart-4: oklch(0.6289 0.1266 49.1);
+  --chart-5: oklch(0.7285 0.0236 80.7);
+  --sidebar: oklch(0.2156 0.0224 240.7);
+  --sidebar-foreground: oklch(0.9588 0.0127 86.8);
+  --sidebar-primary: oklch(0.6684 0.1307 49.1);
+  --sidebar-primary-foreground: oklch(0.1963 0.0363 251.4);
+  --sidebar-accent: oklch(0.3098 0.049 242.6);
+  --sidebar-accent-foreground: oklch(0.9588 0.0127 86.8);
+  --sidebar-border: oklch(0.8858 0.0367 78.1 / 16%);
+  --sidebar-ring: oklch(0.6684 0.1307 49.1);
 }
 
 @layer base {
@@ -199,11 +204,11 @@
   font-family: var(--font-sans);
 }
 .leaflet-tile-pane {
-  filter: grayscale(0.7) brightness(0.62) contrast(1.1) sepia(0.4) hue-rotate(120deg) saturate(1.4);
+  filter: grayscale(0.5) brightness(0.66) contrast(1.08) sepia(0.22) hue-rotate(145deg) saturate(0.9);
   transition: filter 1.2s linear;
 }
 .dark .leaflet-tile-pane {
-  filter: grayscale(0.9) brightness(0.4) contrast(1.2) sepia(0.5) hue-rotate(230deg) saturate(1.6);
+  filter: grayscale(0.78) brightness(0.43) contrast(1.18) sepia(0.18) hue-rotate(150deg) saturate(0.95);
 }
 .leaflet-control-attribution {
   background: color-mix(in oklab, var(--background) 78%, transparent) !important;
@@ -241,18 +246,18 @@
   50% { opacity: 0.85; }
 }
 
-/* Ndebele-inspired chevron strip: signature band under the header. */
+/* Cape Explorer route band: copper, Atlantic teal, warm sand and deep navy. */
 @utility ndebele-strip {
   height: 4px;
   background:
     repeating-linear-gradient(
       135deg,
-      var(--primary) 0 10px,
-      var(--rail) 10px 20px,
-      var(--thread-water) 20px 30px,
-      var(--thread-name) 30px 40px
+      var(--primary) 0 12px,
+      var(--rail) 12px 24px,
+      var(--sand) 24px 36px,
+      var(--secondary) 36px 48px
     );
-  opacity: 0.85;
+  opacity: 0.72;
 }
 
 /* Beadwork track: isiZulu/Xhosa beadstring texture for the timeline rail. */
